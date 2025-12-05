@@ -1,48 +1,29 @@
-import { Shield, Lock, CheckCircle, Award } from "lucide-react";
+import { ShieldCheck, Lock, BadgePercent, Heart } from "lucide-react";
+import { motion } from "framer-motion";
 
-const TrustBadges = () => {
-  const badges = [
-    {
-      icon: Shield,
-      label: "AI-Verified Guides",
-      description: "Every guide vetted",
-    },
-    {
-      icon: Lock,
-      label: "Secure Escrow",
-      description: "Funds protected",
-    },
-    {
-      icon: CheckCircle,
-      label: "Low Deposits",
-      description: "Only 20-25% upfront",
-    },
-    {
-      icon: Award,
-      label: "Insurance Partners",
-      description: "Trip protection available",
-    },
-  ];
+const badges = [
+  { icon: ShieldCheck, label: "AI-Verified Guides", color: "text-trust-blue" },
+  { icon: Lock, label: "Secure Escrow", color: "text-forest" },
+  { icon: BadgePercent, label: "Low 20-25% Deposits", color: "text-accent" },
+  { icon: Heart, label: "Insurance Partners", color: "text-crimson" },
+];
 
-  return (
-    <div className="flex flex-wrap justify-center gap-4 md:gap-8">
-      {badges.map((badge, index) => (
-        <div
-          key={badge.label}
-          className="flex items-center gap-3 rounded-full bg-card/80 backdrop-blur-sm px-4 py-2.5 shadow-soft border border-border/50 animate-slide-up"
-          style={{ animationDelay: `${index * 0.1}s` }}
-        >
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-trust">
-            <badge.icon className="h-4 w-4 text-primary-foreground" />
-          </div>
-          <div className="text-left">
-            <p className="text-sm font-semibold text-foreground">{badge.label}</p>
-            <p className="text-xs text-muted-foreground">{badge.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
+const TrustBadges = () => (
+  <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+    {badges.map((badge, index) => (
+      <motion.div
+        key={badge.label}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1 }}
+        whileHover={{ scale: 1.05, y: -5 }}
+        className="flex items-center gap-2 px-4 py-2 rounded-full glass border border-border/50 hover:border-accent/50 transition-all"
+      >
+        <badge.icon className={`h-4 w-4 ${badge.color}`} />
+        <span className="text-xs md:text-sm font-medium text-foreground">{badge.label}</span>
+      </motion.div>
+    ))}
+  </div>
+);
 
 export default TrustBadges;

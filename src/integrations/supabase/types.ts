@@ -14,7 +14,218 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      guide_applications: {
+        Row: {
+          address_line1: string
+          address_line2: string | null
+          admin_notes: string | null
+          bio: string | null
+          business_license_number: string | null
+          business_name: string | null
+          city: string
+          cpr_first_aid_cert_url: string | null
+          created_at: string
+          date_of_birth: string
+          full_legal_name: string
+          government_id_url: string | null
+          guide_license_url: string | null
+          id: string
+          insurance_certificate_url: string | null
+          phone_number: string
+          references_info: Json | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          service_areas: string[]
+          service_types: Database["public"]["Enums"]["guide_service_type"][]
+          social_media_links: Json | null
+          state: string
+          status: Database["public"]["Enums"]["guide_application_status"]
+          updated_at: string
+          user_id: string
+          website_url: string | null
+          years_of_experience: number
+          zip_code: string
+        }
+        Insert: {
+          address_line1: string
+          address_line2?: string | null
+          admin_notes?: string | null
+          bio?: string | null
+          business_license_number?: string | null
+          business_name?: string | null
+          city: string
+          cpr_first_aid_cert_url?: string | null
+          created_at?: string
+          date_of_birth: string
+          full_legal_name: string
+          government_id_url?: string | null
+          guide_license_url?: string | null
+          id?: string
+          insurance_certificate_url?: string | null
+          phone_number: string
+          references_info?: Json | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          service_areas: string[]
+          service_types: Database["public"]["Enums"]["guide_service_type"][]
+          social_media_links?: Json | null
+          state: string
+          status?: Database["public"]["Enums"]["guide_application_status"]
+          updated_at?: string
+          user_id: string
+          website_url?: string | null
+          years_of_experience: number
+          zip_code: string
+        }
+        Update: {
+          address_line1?: string
+          address_line2?: string | null
+          admin_notes?: string | null
+          bio?: string | null
+          business_license_number?: string | null
+          business_name?: string | null
+          city?: string
+          cpr_first_aid_cert_url?: string | null
+          created_at?: string
+          date_of_birth?: string
+          full_legal_name?: string
+          government_id_url?: string | null
+          guide_license_url?: string | null
+          id?: string
+          insurance_certificate_url?: string | null
+          phone_number?: string
+          references_info?: Json | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          service_areas?: string[]
+          service_types?: Database["public"]["Enums"]["guide_service_type"][]
+          social_media_links?: Json | null
+          state?: string
+          status?: Database["public"]["Enums"]["guide_application_status"]
+          updated_at?: string
+          user_id?: string
+          website_url?: string | null
+          years_of_experience?: number
+          zip_code?: string
+        }
+        Relationships: []
+      }
+      guide_profiles: {
+        Row: {
+          application_id: string
+          avatar_url: string | null
+          average_rating: number | null
+          bio: string | null
+          business_name: string | null
+          cover_image_url: string | null
+          created_at: string
+          display_name: string
+          id: string
+          is_active: boolean | null
+          is_verified: boolean | null
+          service_areas: string[]
+          service_types: Database["public"]["Enums"]["guide_service_type"][]
+          tagline: string | null
+          total_bookings: number | null
+          total_reviews: number | null
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+          website_url: string | null
+          years_of_experience: number
+        }
+        Insert: {
+          application_id: string
+          avatar_url?: string | null
+          average_rating?: number | null
+          bio?: string | null
+          business_name?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          display_name: string
+          id?: string
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          service_areas: string[]
+          service_types: Database["public"]["Enums"]["guide_service_type"][]
+          tagline?: string | null
+          total_bookings?: number | null
+          total_reviews?: number | null
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+          website_url?: string | null
+          years_of_experience: number
+        }
+        Update: {
+          application_id?: string
+          avatar_url?: string | null
+          average_rating?: number | null
+          bio?: string | null
+          business_name?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          service_areas?: string[]
+          service_types?: Database["public"]["Enums"]["guide_service_type"][]
+          tagline?: string | null
+          total_bookings?: number | null
+          total_reviews?: number | null
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+          website_url?: string | null
+          years_of_experience?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_profiles_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "guide_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +234,12 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      guide_application_status:
+        | "pending"
+        | "under_review"
+        | "approved"
+        | "rejected"
+      guide_service_type: "adventure" | "eco" | "hunting" | "fishing" | "pilot"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +366,14 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      guide_application_status: [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected",
+      ],
+      guide_service_type: ["adventure", "eco", "hunting", "fishing", "pilot"],
+    },
   },
 } as const
