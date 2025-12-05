@@ -6,115 +6,99 @@
 
 @layer base {
   :root {
-    /* Alaska Adventure Palette - Blues & Greens for Trust */
-    --background: 210 25% 97%;
-    --foreground: 215 35% 15%;
+    /* Alaska Guide Search - Dark Wilderness Palette */
+    --background: 160 25% 8%;
+    --foreground: 45 20% 92%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 215 35% 15%;
+    --card: 160 20% 12%;
+    --card-foreground: 45 20% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 35% 15%;
+    --popover: 160 20% 10%;
+    --popover-foreground: 45 20% 92%;
 
-    /* Deep Slate Blue - Trust & Professionalism */
-    --primary: 215 50% 23%;
-    --primary-foreground: 210 40% 98%;
+    /* Hunter Green - Trust & Nature */
+    --primary: 158 45% 18%;
+    --primary-foreground: 45 30% 95%;
 
-    /* Forest Teal - Nature & Adventure */
-    --secondary: 175 45% 35%;
-    --secondary-foreground: 0 0% 100%;
+    /* Steel Blue - Reliability */
+    --secondary: 210 35% 30%;
+    --secondary-foreground: 210 20% 95%;
 
-    /* Glacier Blue - Fresh & Clean */
-    --muted: 200 30% 92%;
-    --muted-foreground: 215 20% 45%;
+    /* Charcoal Gray */
+    --muted: 160 15% 18%;
+    --muted-foreground: 160 10% 60%;
 
-    /* Amber Gold - Excitement & CTAs */
-    --accent: 38 92% 55%;
-    --accent-foreground: 215 35% 15%;
+    /* Wilderness Gold - CTAs & Highlights */
+    --accent: 42 85% 50%;
+    --accent-foreground: 160 25% 8%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    /* Crimson Red - Urgency & Alerts */
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 45 30% 95%;
 
-    --border: 210 20% 88%;
-    --input: 210 20% 88%;
-    --ring: 215 50% 23%;
+    --border: 160 15% 22%;
+    --input: 160 15% 22%;
+    --ring: 42 85% 50%;
 
     --radius: 0.75rem;
 
     /* Custom Alaska Colors */
-    --glacier: 195 70% 75%;
-    --glacier-deep: 200 60% 45%;
-    --forest: 160 40% 30%;
-    --mountain: 220 25% 35%;
-    --snow: 210 30% 98%;
-    --amber-glow: 38 100% 60%;
-    --trust-blue: 215 60% 50%;
+    --glacier: 195 50% 55%;
+    --glacier-deep: 200 45% 40%;
+    --forest: 158 45% 22%;
+    --forest-deep: 158 50% 12%;
+    --mountain: 210 25% 25%;
+    --snow: 45 20% 92%;
+    --amber-glow: 42 100% 55%;
+    --trust-blue: 210 45% 45%;
+    --wilderness-gold: 42 85% 50%;
+    --crimson: 0 70% 45%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(215 50% 23% / 0.9), hsl(175 45% 35% / 0.8));
-    --gradient-trust: linear-gradient(135deg, hsl(215 60% 50%), hsl(195 70% 55%));
-    --gradient-cta: linear-gradient(135deg, hsl(38 92% 55%), hsl(28 90% 50%));
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 30% 98%));
+    --gradient-hero: linear-gradient(135deg, hsl(160 25% 8% / 0.95), hsl(158 45% 18% / 0.9));
+    --gradient-trust: linear-gradient(135deg, hsl(158 45% 22%), hsl(210 35% 30%));
+    --gradient-cta: linear-gradient(135deg, hsl(42 85% 50%), hsl(32 80% 45%));
+    --gradient-card: linear-gradient(180deg, hsl(160 20% 14%), hsl(160 20% 10%));
+    --gradient-gold: linear-gradient(135deg, hsl(42 85% 55%), hsl(32 90% 45%));
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(215 50% 23% / 0.15);
-    --shadow-card: 0 8px 30px -8px hsl(215 50% 23% / 0.12);
-    --shadow-elevated: 0 20px 50px -12px hsl(215 50% 23% / 0.2);
-    --shadow-glow: 0 0 40px hsl(38 92% 55% / 0.3);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
+    --shadow-card: 0 8px 30px -8px hsl(0 0% 0% / 0.5);
+    --shadow-elevated: 0 20px 50px -12px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 40px hsl(42 85% 50% / 0.3);
+    --shadow-gold: 0 0 30px hsl(42 85% 50% / 0.4);
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 160 20% 10%;
+    --sidebar-foreground: 45 20% 92%;
+    --sidebar-primary: 158 45% 22%;
+    --sidebar-primary-foreground: 45 30% 95%;
+    --sidebar-accent: 160 15% 18%;
+    --sidebar-accent-foreground: 45 20% 92%;
+    --sidebar-border: 160 15% 22%;
+    --sidebar-ring: 42 85% 50%;
   }
 
   .dark {
-    --background: 215 35% 10%;
-    --foreground: 210 30% 95%;
-
-    --card: 215 30% 14%;
-    --card-foreground: 210 30% 95%;
-
-    --popover: 215 30% 14%;
-    --popover-foreground: 210 30% 95%;
-
-    --primary: 195 70% 65%;
-    --primary-foreground: 215 35% 10%;
-
-    --secondary: 175 45% 40%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 215 25% 20%;
-    --muted-foreground: 210 20% 65%;
-
-    --accent: 38 92% 55%;
-    --accent-foreground: 215 35% 10%;
-
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 215 25% 22%;
-    --input: 215 25% 22%;
-    --ring: 195 70% 65%;
-
-    --glacier: 195 60% 60%;
-    --glacier-deep: 200 50% 50%;
-    --forest: 160 35% 40%;
-    --mountain: 220 20% 50%;
-    --snow: 210 20% 90%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Same as root - dark by default */
+    --background: 160 25% 8%;
+    --foreground: 45 20% 92%;
+    --card: 160 20% 12%;
+    --card-foreground: 45 20% 92%;
+    --popover: 160 20% 10%;
+    --popover-foreground: 45 20% 92%;
+    --primary: 158 45% 18%;
+    --primary-foreground: 45 30% 95%;
+    --secondary: 210 35% 30%;
+    --secondary-foreground: 210 20% 95%;
+    --muted: 160 15% 18%;
+    --muted-foreground: 160 10% 60%;
+    --accent: 42 85% 50%;
+    --accent-foreground: 160 25% 8%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 45 30% 95%;
+    --border: 160 15% 22%;
+    --input: 160 15% 22%;
+    --ring: 42 85% 50%;
   }
 }
 
@@ -139,6 +123,11 @@
     background-image: var(--gradient-trust);
   }
 
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-gold);
+  }
+
   .bg-gradient-hero {
     background-image: var(--gradient-hero);
   }
@@ -149,6 +138,10 @@
 
   .bg-gradient-trust {
     background-image: var(--gradient-trust);
+  }
+
+  .bg-gradient-card {
+    background-image: var(--gradient-card);
   }
 
   .shadow-soft {
@@ -165,6 +158,19 @@
 
   .shadow-glow {
     box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50;
+  }
+
+  .glass-dark {
+    @apply bg-background/80 backdrop-blur-xl border border-border/30;
   }
 }
 
@@ -189,6 +195,20 @@
   .animate-fade-in {
     animation: fade-in 0.8s ease-out forwards;
   }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background: linear-gradient(90deg, transparent, hsl(42 85% 50% / 0.1), transparent);
+    background-size: 200% 100%;
+  }
+
+  .animate-border-glow {
+    animation: border-glow 3s ease-in-out infinite;
+  }
 }
 
 @keyframes float {
@@ -205,7 +225,7 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.85;
+    opacity: 0.7;
   }
 }
 
@@ -227,4 +247,54 @@
   to {
     opacity: 1;
   }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px hsl(42 85% 50% / 0.3);
+  }
+  to {
+    box-shadow: 0 0 40px hsl(42 85% 50% / 0.5);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    border-color: hsl(42 85% 50% / 0.3);
+  }
+  50% {
+    border-color: hsl(42 85% 50% / 0.8);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(160 25% 8%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(160 15% 22%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(42 85% 50% / 0.5);
 }
