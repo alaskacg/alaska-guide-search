@@ -19,7 +19,7 @@ const steps = [
   { id: 4, title: "Verification", icon: Shield },
 ];
 
-const serviceTypes = [
+const serviceTypes: { id: "adventure" | "eco" | "hunting" | "fishing" | "pilot"; label: string }[] = [
   { id: "adventure", label: "Adventure Guide" },
   { id: "eco", label: "Eco-Guide" },
   { id: "hunting", label: "Hunting Guide" },
@@ -43,7 +43,7 @@ const GuideRegistration = () => {
     fullLegalName: "", dateOfBirth: "", phoneNumber: "",
     addressLine1: "", addressLine2: "", city: "", state: "Alaska", zipCode: "",
     businessName: "", businessLicenseNumber: "", yearsOfExperience: "",
-    serviceTypes: [] as string[], serviceAreas: [] as string[],
+    serviceTypes: [] as ("adventure" | "eco" | "hunting" | "fishing" | "pilot")[], serviceAreas: [] as string[],
     bio: "", websiteUrl: "",
     agreeTerms: false, agreeVerification: false,
   });
@@ -57,7 +57,9 @@ const GuideRegistration = () => {
 
   const updateField = (field: string, value: any) => setFormData(prev => ({ ...prev, [field]: value }));
 
-  const toggleService = (id: string) => {
+  type ServiceType = "adventure" | "eco" | "hunting" | "fishing" | "pilot";
+  
+  const toggleService = (id: ServiceType) => {
     setFormData(prev => ({
       ...prev,
       serviceTypes: prev.serviceTypes.includes(id)
@@ -82,7 +84,7 @@ const GuideRegistration = () => {
     }
     setLoading(true);
     try {
-      const { error } = await supabase.from("guide_applications").insert({
+      const { error } = await supabase.from("guide_applications").insert([{
         user_id: user.id,
         full_legal_name: formData.fullLegalName,
         date_of_birth: formData.dateOfBirth,
@@ -99,7 +101,7 @@ const GuideRegistration = () => {
         service_areas: formData.serviceAreas,
         bio: formData.bio || null,
         website_url: formData.websiteUrl || null,
-      });
+      }]);
       if (error) throw error;
       toast({ title: "Application Submitted!", description: "We'll review your application within 2-3 business days." });
       navigate("/");

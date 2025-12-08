@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import TrustBadges from "./TrustBadges";
 import heroImage from "@/assets/hero-alaska.jpg";
-import { Play, ChevronDown, Search, Compass } from "lucide-react";
+import { ChevronDown, Search, Compass, AlertTriangle } from "lucide-react";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
@@ -28,8 +28,8 @@ const HeroSection = () => {
             key={i}
             className="absolute w-1 h-1 bg-accent/30 rounded-full"
             initial={{ 
-              x: Math.random() * window.innerWidth, 
-              y: window.innerHeight + 10,
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920), 
+              y: (typeof window !== 'undefined' ? window.innerHeight : 1080) + 10,
               opacity: 0 
             }}
             animate={{ 
@@ -48,58 +48,79 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
+          {/* Safety Warning Badge */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 mb-8 animate-border-glow"
+            className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 mb-6 border border-danger/30"
           >
             <motion.span 
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="flex h-2 w-2 rounded-full bg-accent"
-            />
+              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <AlertTriangle className="h-4 w-4 text-danger" />
+            </motion.span>
             <span className="text-sm font-medium text-foreground">
-              Alaska's #1 Guide Search Platform
+              Alaska's wilderness demands respect — explore safely with verified guides
             </span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline - Smaller, Display Font */}
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight"
+            className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight tracking-tight"
           >
-            Find Your Perfect
-            <motion.span 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-              className="block text-gradient-gold"
+            <motion.span
+              initial={{ opacity: 0, rotateX: -90 }}
+              animate={{ opacity: 1, rotateX: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="block"
             >
-              Alaska Adventure
+              Don't Become a Statistic
             </motion.span>
-            Guide
+            <motion.span 
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="block text-gradient-gold text-2xl md:text-3xl lg:text-4xl mt-2"
+            >
+              Explore Alaska Safely
+            </motion.span>
           </motion.h1>
 
-          {/* Subheadline */}
+          {/* Subheadline - Safety Focus */}
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
+            className="text-base md:text-lg text-muted-foreground mb-6 max-w-2xl mx-auto leading-relaxed"
           >
-            Connect with AI-verified guides for hunting, fishing, eco-tours, and bush flights. 
-            Book with confidence — only <strong className="text-accent">20-25% deposit</strong>, funds held in secure escrow until your trip.
+            Alaska's breathtaking beauty lies beyond the beaten path — but so do its dangers. 
+            An experienced, verified guide isn't a luxury; it's <strong className="text-accent">essential</strong> for your safety and success.
           </motion.p>
+
+          {/* Low Deposit Value Prop */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="glass rounded-xl p-4 mb-8 max-w-xl mx-auto border border-accent/20"
+          >
+            <p className="text-sm text-muted-foreground">
+              <span className="text-accent font-semibold">Industry standard: 50% deposit.</span>{" "}
+              Our rigorous vetting protects both parties, so we require only{" "}
+              <span className="text-accent font-bold">20-25% down</span> — saving you money while providing peace of mind.
+            </p>
+          </motion.div>
 
           {/* Search Bar */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto mb-8"
           >
             <div className="relative flex-1">
@@ -113,7 +134,7 @@ const HeroSection = () => {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="hero" size="xl" className="w-full sm:w-auto">
                 <Compass className="h-5 w-5 mr-2" />
-                Search Guides
+                Find Your Guide
               </Button>
             </motion.div>
           </motion.div>
@@ -122,7 +143,7 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.8 }}
             className="flex flex-wrap justify-center gap-3 mb-12"
           >
             {["Hunting", "Fishing", "Eco-Tours", "Bush Flights", "Adventure"].map((category, index) => (
@@ -130,7 +151,7 @@ const HeroSection = () => {
                 key={category}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8 + index * 0.1 }}
+                transition={{ delay: 0.9 + index * 0.1 }}
                 whileHover={{ scale: 1.1, backgroundColor: "hsl(42 85% 50%)" }}
                 whileTap={{ scale: 0.95 }}
                 className="px-4 py-2 rounded-full glass text-sm font-medium text-foreground hover:text-accent-foreground transition-all"
@@ -144,7 +165,7 @@ const HeroSection = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
+            transition={{ delay: 1.2 }}
           >
             <TrustBadges />
           </motion.div>
@@ -154,7 +175,7 @@ const HeroSection = () => {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 1.4 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <motion.a 
