@@ -81,6 +81,7 @@ export default {
           gold: "hsl(var(--wilderness-gold))",
         },
         crimson: "hsl(var(--crimson))",
+        danger: "hsl(var(--destructive))",
       },
       borderRadius: {
         lg: "var(--radius)",
