@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Search, Mail, Lock, User, ArrowLeft } from "lucide-react";
+import { Mail, Lock, User, ArrowLeft, CheckCircle, Sparkles, Gift } from "lucide-react";
 import { Link } from "react-router-dom";
+import Logo from "@/components/Logo";
+import BetaBanner from "@/components/BetaBanner";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,8 +18,27 @@ const Auth = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        navigate("/");
+      }
+    });
+
+    // Check if already logged in
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        navigate("/");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +49,6 @@ const Auth = () => {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast({ title: "Welcome back!", description: "You've successfully signed in." });
-        navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -39,15 +59,77 @@ const Auth = () => {
           }
         });
         if (error) throw error;
-        toast({ title: "Account created!", description: "Welcome to Alaska Guide Search." });
-        navigate("/");
+        setEmailSent(true);
+        toast({ 
+          title: "Verification email sent!", 
+          description: "Please check your inbox and click the verification link to complete signup." 
+        });
       }
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      let message = error.message;
+      if (message.includes("User already registered")) {
+        message = "An account with this email already exists. Try signing in instead.";
+      }
+      toast({ title: "Error", description: message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
   };
+
+  if (emailSent) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-md"
+        >
+          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors">
+            <ArrowLeft className="h-4 w-4" />
+            Back to home
+          </Link>
+
+          <div className="glass rounded-2xl p-8 text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", delay: 0.2 }}
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 mx-auto mb-6"
+            >
+              <CheckCircle className="h-8 w-8 text-green-500" />
+            </motion.div>
+
+            <h1 className="font-display text-2xl font-bold text-foreground mb-2">
+              Check Your Email
+            </h1>
+            <p className="text-muted-foreground mb-6">
+              We've sent a verification link to <strong className="text-foreground">{email}</strong>. 
+              Click the link in the email to verify your account and complete signup.
+            </p>
+
+            <div className="p-4 rounded-lg bg-muted/50 border border-border/50 text-left mb-6">
+              <h3 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                <Gift className="h-4 w-4 text-accent" />
+                Beta Benefit
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                As a beta user, you'll enjoy free access to all features. 
+                Guides can list for free until we exit beta!
+              </p>
+            </div>
+
+            <Button 
+              variant="outline" 
+              onClick={() => setEmailSent(false)}
+              className="w-full"
+            >
+              Use a different email
+            </Button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -62,13 +144,9 @@ const Auth = () => {
         </Link>
 
         <div className="glass rounded-2xl p-8">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-cta">
-              <Search className="h-5 w-5 text-accent-foreground" />
-            </div>
-            <span className="font-display text-xl font-bold text-foreground">
-              Alaska<span className="text-accent">Guide</span>Search
-            </span>
+          <div className="flex items-center justify-between mb-6">
+            <Logo size="md" showText={true} />
+            <BetaBanner variant="compact" />
           </div>
 
           <h1 className="font-display text-2xl font-bold text-foreground mb-2">
@@ -77,6 +155,25 @@ const Auth = () => {
           <p className="text-muted-foreground mb-6">
             {isLogin ? "Sign in to continue your adventure" : "Join Alaska's premier guide platform"}
           </p>
+
+          {!isLogin && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="mb-6 p-4 rounded-lg bg-accent/10 border border-accent/30"
+            >
+              <div className="flex items-start gap-3">
+                <Sparkles className="h-5 w-5 text-accent mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">Beta Launch Special</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Create your account now and enjoy free access during our beta period. 
+                    Guides can list for free — no subscription fees until we officially launch!
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           <form onSubmit={handleAuth} className="space-y-4">
             {!isLogin && (
@@ -122,6 +219,12 @@ const Auth = () => {
               {isLogin ? "Sign up" : "Sign in"}
             </button>
           </p>
+
+          {!isLogin && (
+            <p className="text-center text-xs text-muted-foreground mt-4">
+              By creating an account, you agree to our Terms of Service and Privacy Policy.
+            </p>
+          )}
         </div>
       </motion.div>
     </div>

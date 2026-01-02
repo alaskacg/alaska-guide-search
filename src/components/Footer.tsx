@@ -1,5 +1,6 @@
-import { Search, Mail, Phone, MapPin, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, Youtube, Twitter, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "./Logo";
 import { motion } from "framer-motion";
 
 const Footer = () => {
@@ -92,22 +93,20 @@ const Footer = () => {
         >
           {/* Brand */}
           <motion.div variants={itemVariants} className="col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-6 group">
-              <motion.div 
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-cta"
-              >
-                <Search className="h-5 w-5 text-accent-foreground" />
-              </motion.div>
-              <span className="font-display text-xl font-bold text-foreground">
-                Alaska<span className="text-accent">Guide</span>
-                <span className="text-muted-foreground text-sm ml-1">Search</span>
-              </span>
+            <a href="/" className="flex items-center gap-2 mb-4">
+              <Logo size="md" showText={true} animated={false} />
             </a>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
+            
+            {/* Beta Notice */}
+            <div className="flex items-center gap-2 mb-4 text-xs">
+              <Sparkles className="h-3 w-3 text-accent" />
+              <span className="text-accent font-medium">BETA</span>
+              <span className="text-muted-foreground">— Free listings for guides!</span>
+            </div>
+            
+            <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
               Alaska's premier guide search platform. Connecting adventurers with 
-              AI-verified guides through secure, low-deposit bookings.
+              verified guides through secure, low-deposit bookings.
             </p>
             <div className="space-y-2 text-sm text-muted-foreground">
               <motion.p 

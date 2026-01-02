@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import TrustBadges from "./TrustBadges";
+import BetaBanner from "./BetaBanner";
 import heroImage from "@/assets/hero-alaska.jpg";
-import { ChevronDown, Search, Compass, AlertTriangle } from "lucide-react";
+import { ChevronDown, Search, Compass } from "lucide-react";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
@@ -48,23 +49,8 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Safety Warning Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 mb-6 border border-danger/30"
-          >
-            <motion.span 
-              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <AlertTriangle className="h-4 w-4 text-danger" />
-            </motion.span>
-            <span className="text-sm font-medium text-foreground">
-              Alaska's wilderness demands respect — explore safely with verified guides
-            </span>
-          </motion.div>
+          {/* Beta Banner */}
+          <BetaBanner variant="hero" />
 
           {/* Headline - Smaller, Display Font */}
           <motion.h1 
