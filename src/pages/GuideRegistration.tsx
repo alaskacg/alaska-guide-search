@@ -8,9 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Search, ArrowLeft, ArrowRight, CheckCircle2, Shield, FileText, User, Briefcase, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Shield, FileText, User, Briefcase, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import BetaBanner from "@/components/BetaBanner";
 
 const steps = [
   { id: 1, title: "Personal Info", icon: User },
@@ -120,6 +121,9 @@ const GuideRegistration = () => {
           <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8">
             <ArrowLeft className="h-4 w-4" /> Back to home
           </Link>
+
+          {/* Beta Banner for Guides */}
+          <BetaBanner variant="guide" />
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">

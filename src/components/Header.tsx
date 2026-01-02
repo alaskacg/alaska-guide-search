@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Mountain, Search, User } from "lucide-react";
+import Logo from "./Logo";
+import BetaBanner from "./BetaBanner";
+import { Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
@@ -24,18 +26,9 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <motion.div 
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-cta shadow-gold group-hover:shadow-glow transition-all duration-300"
-            >
-              <Search className="h-5 w-5 text-accent-foreground" />
-            </motion.div>
-            <span className="font-display text-xl font-bold text-foreground">
-              Alaska<span className="text-accent">Guide</span>
-              <span className="text-muted-foreground text-sm ml-1">Search</span>
-            </span>
+          <Link to="/" className="flex items-center gap-3">
+            <Logo size="md" showText={true} animated={true} />
+            <BetaBanner variant="compact" />
           </Link>
 
           {/* Desktop Navigation */}
