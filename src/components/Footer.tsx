@@ -94,7 +94,7 @@ const Footer = () => {
           {/* Brand */}
           <motion.div variants={itemVariants} className="col-span-2">
             <a href="/" className="flex items-center gap-2 mb-4">
-              <Logo size="md" showText={true} animated={false} />
+              <Logo size="md" showText={true} />
             </a>
             
             {/* Beta Notice */}

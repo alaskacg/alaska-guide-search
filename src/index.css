@@ -2,103 +2,106 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap');
 
 @layer base {
   :root {
-    /* Alaska Guide Search - Dark Wilderness Palette */
-    --background: 160 25% 8%;
-    --foreground: 45 20% 92%;
+    /* Alaska Guide Search - Refined Dark Palette */
+    --background: 200 20% 6%;
+    --foreground: 40 15% 94%;
 
-    --card: 160 20% 12%;
-    --card-foreground: 45 20% 92%;
+    --card: 200 18% 10%;
+    --card-foreground: 40 15% 94%;
 
-    --popover: 160 20% 10%;
-    --popover-foreground: 45 20% 92%;
+    --popover: 200 18% 8%;
+    --popover-foreground: 40 15% 94%;
 
-    /* Hunter Green - Trust & Nature */
-    --primary: 158 45% 18%;
-    --primary-foreground: 45 30% 95%;
+    /* Deep Forest Green - Trust & Nature */
+    --primary: 165 40% 16%;
+    --primary-foreground: 40 30% 96%;
 
-    /* Steel Blue - Reliability */
-    --secondary: 210 35% 30%;
-    --secondary-foreground: 210 20% 95%;
+    /* Slate Blue - Reliability */
+    --secondary: 215 30% 26%;
+    --secondary-foreground: 215 20% 96%;
 
-    /* Charcoal Gray */
-    --muted: 160 15% 18%;
-    --muted-foreground: 160 10% 60%;
+    /* Neutral Gray-Green */
+    --muted: 200 15% 14%;
+    --muted-foreground: 200 10% 55%;
 
-    /* Wilderness Gold - CTAs & Highlights */
-    --accent: 42 85% 50%;
-    --accent-foreground: 160 25% 8%;
+    /* Warm Amber - CTAs & Highlights */
+    --accent: 38 92% 50%;
+    --accent-foreground: 200 20% 6%;
 
-    /* Crimson Red - Urgency & Alerts */
-    --destructive: 0 70% 45%;
-    --destructive-foreground: 45 30% 95%;
+    /* Alert Red */
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 40 30% 96%;
 
-    --border: 160 15% 22%;
-    --input: 160 15% 22%;
-    --ring: 42 85% 50%;
+    --border: 200 15% 18%;
+    --input: 200 15% 18%;
+    --ring: 38 92% 50%;
 
-    --radius: 0.75rem;
+    --radius: 0.625rem;
 
     /* Custom Alaska Colors */
-    --glacier: 195 50% 55%;
-    --glacier-deep: 200 45% 40%;
-    --forest: 158 45% 22%;
-    --forest-deep: 158 50% 12%;
-    --mountain: 210 25% 25%;
-    --snow: 45 20% 92%;
-    --amber-glow: 42 100% 55%;
-    --trust-blue: 210 45% 45%;
-    --wilderness-gold: 42 85% 50%;
-    --crimson: 0 70% 45%;
+    --glacier: 190 55% 50%;
+    --glacier-deep: 195 50% 35%;
+    --forest: 165 40% 20%;
+    --forest-deep: 165 45% 10%;
+    --mountain: 215 22% 22%;
+    --mountain-peak: 200 15% 35%;
+    --snow: 40 15% 94%;
+    --amber-glow: 38 100% 58%;
+    --trust-blue: 215 50% 42%;
+    --wilderness-gold: 38 92% 50%;
+    --crimson: 0 65% 48%;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(160 25% 8% / 0.95), hsl(158 45% 18% / 0.9));
-    --gradient-trust: linear-gradient(135deg, hsl(158 45% 22%), hsl(210 35% 30%));
-    --gradient-cta: linear-gradient(135deg, hsl(42 85% 50%), hsl(32 80% 45%));
-    --gradient-card: linear-gradient(180deg, hsl(160 20% 14%), hsl(160 20% 10%));
-    --gradient-gold: linear-gradient(135deg, hsl(42 85% 55%), hsl(32 90% 45%));
+    /* Refined Gradients */
+    --gradient-hero: linear-gradient(160deg, hsl(200 20% 6% / 0.97), hsl(165 40% 16% / 0.85));
+    --gradient-trust: linear-gradient(135deg, hsl(165 40% 20%), hsl(215 30% 26%));
+    --gradient-cta: linear-gradient(135deg, hsl(38 92% 50%), hsl(28 85% 45%));
+    --gradient-card: linear-gradient(180deg, hsl(200 18% 12%), hsl(200 18% 8%));
+    --gradient-gold: linear-gradient(135deg, hsl(38 92% 55%), hsl(28 90% 42%));
+    --gradient-subtle: linear-gradient(180deg, transparent, hsl(200 20% 6% / 0.8));
 
-    /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
-    --shadow-card: 0 8px 30px -8px hsl(0 0% 0% / 0.5);
-    --shadow-elevated: 0 20px 50px -12px hsl(0 0% 0% / 0.6);
-    --shadow-glow: 0 0 40px hsl(42 85% 50% / 0.3);
-    --shadow-gold: 0 0 30px hsl(42 85% 50% / 0.4);
+    /* Refined Shadows */
+    --shadow-soft: 0 4px 24px -4px hsl(0 0% 0% / 0.35);
+    --shadow-card: 0 8px 40px -8px hsl(0 0% 0% / 0.45);
+    --shadow-elevated: 0 24px 60px -12px hsl(0 0% 0% / 0.55);
+    --shadow-glow: 0 0 50px hsl(38 92% 50% / 0.2);
+    --shadow-gold: 0 8px 30px hsl(38 92% 50% / 0.25);
+    --shadow-inner: inset 0 2px 4px hsl(0 0% 0% / 0.2);
 
-    --sidebar-background: 160 20% 10%;
-    --sidebar-foreground: 45 20% 92%;
-    --sidebar-primary: 158 45% 22%;
-    --sidebar-primary-foreground: 45 30% 95%;
-    --sidebar-accent: 160 15% 18%;
-    --sidebar-accent-foreground: 45 20% 92%;
-    --sidebar-border: 160 15% 22%;
-    --sidebar-ring: 42 85% 50%;
+    --sidebar-background: 200 18% 8%;
+    --sidebar-foreground: 40 15% 94%;
+    --sidebar-primary: 165 40% 20%;
+    --sidebar-primary-foreground: 40 30% 96%;
+    --sidebar-accent: 200 15% 14%;
+    --sidebar-accent-foreground: 40 15% 94%;
+    --sidebar-border: 200 15% 18%;
+    --sidebar-ring: 38 92% 50%;
   }
 
   .dark {
     /* Same as root - dark by default */
-    --background: 160 25% 8%;
-    --foreground: 45 20% 92%;
-    --card: 160 20% 12%;
-    --card-foreground: 45 20% 92%;
-    --popover: 160 20% 10%;
-    --popover-foreground: 45 20% 92%;
-    --primary: 158 45% 18%;
-    --primary-foreground: 45 30% 95%;
-    --secondary: 210 35% 30%;
-    --secondary-foreground: 210 20% 95%;
-    --muted: 160 15% 18%;
-    --muted-foreground: 160 10% 60%;
-    --accent: 42 85% 50%;
-    --accent-foreground: 160 25% 8%;
-    --destructive: 0 70% 45%;
-    --destructive-foreground: 45 30% 95%;
-    --border: 160 15% 22%;
-    --input: 160 15% 22%;
-    --ring: 42 85% 50%;
+    --background: 200 20% 6%;
+    --foreground: 40 15% 94%;
+    --card: 200 18% 10%;
+    --card-foreground: 40 15% 94%;
+    --popover: 200 18% 8%;
+    --popover-foreground: 40 15% 94%;
+    --primary: 165 40% 16%;
+    --primary-foreground: 40 30% 96%;
+    --secondary: 215 30% 26%;
+    --secondary-foreground: 215 20% 96%;
+    --muted: 200 15% 14%;
+    --muted-foreground: 200 10% 55%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 200 20% 6%;
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 40 30% 96%;
+    --border: 200 15% 18%;
+    --input: 200 15% 18%;
+    --ring: 38 92% 50%;
   }
 }
 
@@ -109,11 +112,13 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
   }
 }
 
@@ -144,6 +149,10 @@
     background-image: var(--gradient-card);
   }
 
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
@@ -164,13 +173,37 @@
     box-shadow: var(--shadow-gold);
   }
 
-  /* Glass morphism effect */
+  .shadow-inner-custom {
+    box-shadow: var(--shadow-inner);
+  }
+
+  /* Refined Glass morphism */
   .glass {
-    @apply bg-card/60 backdrop-blur-xl border border-border/50;
+    @apply bg-card/50 backdrop-blur-2xl border border-border/40;
   }
 
   .glass-dark {
-    @apply bg-background/80 backdrop-blur-xl border border-border/30;
+    @apply bg-background/85 backdrop-blur-2xl border border-border/25;
+  }
+
+  /* Premium card styles */
+  .card-premium {
+    @apply bg-card rounded-xl border border-border/50 shadow-card;
+    background-image: var(--gradient-card);
+  }
+
+  /* Subtle noise texture overlay */
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    pointer-events: none;
+    mix-blend-mode: overlay;
   }
 }
 
