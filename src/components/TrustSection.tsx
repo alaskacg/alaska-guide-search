@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Percent, Clock, CheckCircle, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { MountainSilhouette, GlowOrbs, NoiseTexture } from "./backgrounds";
 
 const TrustSection = () => {
   const features = [
@@ -33,10 +35,11 @@ const TrustSection = () => {
 
   return (
     <section id="trust" className="py-24 bg-card relative overflow-hidden">
-      {/* Subtle background elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-glacier rounded-full blur-[120px]" />
+      {/* Animated Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <MountainSilhouette />
+        <GlowOrbs primaryColor="accent" secondaryColor="glacier" />
+        <NoiseTexture />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -134,9 +137,11 @@ const TrustSection = () => {
           transition={{ delay: 0.5 }}
           className="text-center"
         >
-          <Button variant="hero" size="lg" className="group">
-            Find Your Guide
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          <Button variant="hero" size="lg" className="group" asChild>
+            <Link to="/fishing">
+              Find Your Guide
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Button>
           <p className="mt-4 text-xs text-muted-foreground flex items-center justify-center gap-2">
             <CheckCircle className="h-3.5 w-3.5 text-glacier" />
