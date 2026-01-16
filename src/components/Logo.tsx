@@ -7,74 +7,72 @@ interface LogoProps {
 
 const Logo = ({ size = "md", showText = true }: LogoProps) => {
   const sizes = {
-    sm: { container: "h-9", text: "text-base", subtext: "text-[10px]" },
-    md: { container: "h-11", text: "text-lg", subtext: "text-[11px]" },
-    lg: { container: "h-14", text: "text-xl", subtext: "text-xs" },
+    sm: { icon: 28, text: "text-sm", gap: "gap-2" },
+    md: { icon: 36, text: "text-base", gap: "gap-2.5" },
+    lg: { icon: 44, text: "text-lg", gap: "gap-3" },
   };
 
   const s = sizes[size];
 
   return (
     <motion.div 
-      className="flex items-center gap-2.5"
+      className={`flex items-center ${s.gap}`}
       whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
-      {/* Minimalist Icon Mark */}
-      <div className={`${s.container} aspect-square relative flex items-center justify-center`}>
-        <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
-          {/* Mountain silhouette with clean lines */}
-          <defs>
-            <linearGradient id="mountainGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="hsl(158 45% 22%)" />
-              <stop offset="100%" stopColor="hsl(160 50% 35%)" />
-            </linearGradient>
-            <linearGradient id="peakGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="hsl(45 100% 96%)" />
-              <stop offset="100%" stopColor="hsl(160 30% 70%)" />
-            </linearGradient>
-            <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(42 100% 65%)" />
-              <stop offset="100%" stopColor="hsl(32 90% 50%)" />
-            </linearGradient>
-          </defs>
-          
-          {/* Main mountain */}
-          <path
-            d="M4 40 L24 10 L44 40 Z"
-            fill="url(#mountainGrad)"
-          />
-          
-          {/* Snow cap */}
-          <path
-            d="M24 10 L20 18 L24 16 L28 18 Z"
-            fill="url(#peakGrad)"
-          />
-          
-          {/* North star */}
-          <motion.g
-            initial={{ opacity: 0.7 }}
-            animate={{ opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <circle cx="38" cy="12" r="2" fill="url(#starGrad)" />
-            <path
-              d="M38 8 L38 16 M34 12 L42 12"
-              stroke="hsl(42 100% 65%)"
-              strokeWidth="0.75"
-              strokeLinecap="round"
-              opacity="0.6"
-            />
-          </motion.g>
-        </svg>
-      </div>
+      {/* Abstract Geometric Mark - Northern Lights + Mountain abstraction */}
+      <svg 
+        width={s.icon} 
+        height={s.icon} 
+        viewBox="0 0 48 48" 
+        fill="none"
+        className="flex-shrink-0"
+      >
+        <defs>
+          {/* Aurora gradient */}
+          <linearGradient id="aurora" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#2DD4BF" />
+            <stop offset="50%" stopColor="#0EA5E9" />
+            <stop offset="100%" stopColor="#6366F1" />
+          </linearGradient>
+          {/* Warm accent */}
+          <linearGradient id="warmAccent" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#F59E0B" />
+            <stop offset="100%" stopColor="#FBBF24" />
+          </linearGradient>
+        </defs>
+        
+        {/* Main geometric shape - abstract A / mountain peak */}
+        <path
+          d="M24 6L42 38H6L24 6Z"
+          fill="url(#aurora)"
+          opacity="0.9"
+        />
+        
+        {/* Inner cutout creating depth */}
+        <path
+          d="M24 18L32 34H16L24 18Z"
+          fill="hsl(200 20% 6%)"
+        />
+        
+        {/* North star / compass point */}
+        <motion.circle
+          cx="24"
+          cy="12"
+          r="2.5"
+          fill="url(#warmAccent)"
+          initial={{ opacity: 0.8 }}
+          animate={{ opacity: [0.8, 1, 0.8] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </svg>
       
       {showText && (
-        <div className="flex flex-col -space-y-0.5">
-          <span className={`font-sans font-bold tracking-tight ${s.text} text-foreground leading-tight`}>
-            Alaska<span className="text-accent">Guide</span>
+        <div className="flex flex-col leading-none">
+          <span className={`font-semibold tracking-tight ${s.text} text-foreground`}>
+            AlaskaGuide
           </span>
-          <span className={`font-sans font-medium tracking-[0.2em] uppercase ${s.subtext} text-muted-foreground`}>
+          <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-muted-foreground mt-0.5">
             Search
           </span>
         </div>
