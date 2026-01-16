@@ -155,9 +155,14 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
       </svg>
       
       {showText && (
-        <span className={`font-display font-medium tracking-tight ${s.text} text-foreground`}>
-          AlaskaGuide
-        </span>
+        <div className="flex flex-col leading-none">
+          <span className={`font-display font-medium tracking-tight ${s.text} text-foreground`}>
+            AlaskaGuide
+          </span>
+          <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-muted-foreground">
+            Search
+          </span>
+        </div>
       )}
     </motion.div>
   );
