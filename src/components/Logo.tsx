@@ -7,9 +7,9 @@ interface LogoProps {
 
 const Logo = ({ size = "md", showText = true }: LogoProps) => {
   const sizes = {
-    sm: { icon: 28, text: "text-sm", gap: "gap-2" },
-    md: { icon: 36, text: "text-base", gap: "gap-2.5" },
-    lg: { icon: 44, text: "text-lg", gap: "gap-3" },
+    sm: { icon: 32, text: "text-lg", gap: "gap-2.5" },
+    md: { icon: 40, text: "text-xl", gap: "gap-3" },
+    lg: { icon: 48, text: "text-2xl", gap: "gap-3.5" },
   };
 
   const s = sizes[size];
@@ -20,7 +20,7 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
-      {/* Abstract Geometric Mark */}
+      {/* Custom Alaska-inspired compass/mountain mark */}
       <svg 
         width={s.icon} 
         height={s.icon} 
@@ -29,51 +29,59 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
         className="flex-shrink-0"
       >
         <defs>
-          {/* Crimson gradient */}
-          <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#DC2626" />
-            <stop offset="100%" stopColor="#991B1B" />
+          {/* Deep crimson gradient */}
+          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(0, 72%, 55%)" />
+            <stop offset="100%" stopColor="hsl(0, 72%, 40%)" />
           </linearGradient>
-          {/* Light accent for contrast */}
-          <linearGradient id="lightAccent" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#F5F5F5" />
-            <stop offset="100%" stopColor="#E5E5E5" />
-          </linearGradient>
+          {/* Subtle inner shadow */}
+          <filter id="innerShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
+            <feOffset dx="0" dy="1" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" />
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0" />
+            <feBlend in2="SourceGraphic" />
+          </filter>
         </defs>
         
-        {/* Main geometric shape - abstract A / mountain peak */}
-        <path
-          d="M24 6L42 38H6L24 6Z"
-          fill="url(#crimsonGrad)"
+        {/* Outer ring - compass inspired */}
+        <circle
+          cx="24"
+          cy="24"
+          r="22"
+          stroke="url(#logoGradient)"
+          strokeWidth="2"
+          fill="none"
         />
         
-        {/* Inner cutout creating depth */}
+        {/* Inner mountain peaks forming an abstract "A" */}
         <path
-          d="M24 18L32 34H16L24 18Z"
-          fill="hsl(200 20% 6%)"
+          d="M24 10L36 34H30L24 22L18 34H12L24 10Z"
+          fill="url(#logoGradient)"
+          filter="url(#innerShadow)"
         />
         
-        {/* North star accent */}
+        {/* North star indicator */}
         <motion.circle
           cx="24"
-          cy="12"
+          cy="6"
           r="2"
-          fill="url(#lightAccent)"
-          initial={{ opacity: 0.9 }}
-          animate={{ opacity: [0.9, 1, 0.9] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          fill="hsl(0, 72%, 50%)"
+          initial={{ opacity: 0.8 }}
+          animate={{ opacity: [0.8, 1, 0.8] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         />
+        
+        {/* Compass cardinal points */}
+        <circle cx="42" cy="24" r="1.5" fill="hsl(0, 10%, 50%)" />
+        <circle cx="6" cy="24" r="1.5" fill="hsl(0, 10%, 50%)" />
+        <circle cx="24" cy="42" r="1.5" fill="hsl(0, 10%, 50%)" />
       </svg>
       
       {showText && (
-        <div className="flex flex-col leading-none">
-          <span className={`font-semibold tracking-tight ${s.text} text-foreground`}>
-            AlaskaGuide
-          </span>
-          <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-muted-foreground mt-0.5">
-            Search
-          </span>
-        </div>
+        <span className={`font-display font-medium tracking-tight ${s.text} text-foreground`}>
+          AlaskaGuide
+        </span>
       )}
     </motion.div>
   );
