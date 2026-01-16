@@ -4,6 +4,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import FishingPage from "./pages/categories/FishingPage";
+import HuntingPage from "./pages/categories/HuntingPage";
+import EcoToursPage from "./pages/categories/EcoToursPage";
+import FlightsPage from "./pages/categories/FlightsPage";
 import Auth from "./pages/Auth";
 import GuideRegistration from "./pages/GuideRegistration";
 import GuideDashboard from "./pages/GuideDashboard";
@@ -25,6 +29,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/fishing" element={<FishingPage />} />
+          <Route path="/hunting" element={<HuntingPage />} />
+          <Route path="/eco-tours" element={<EcoToursPage />} />
+          <Route path="/flights" element={<FlightsPage />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/guide-registration" element={<GuideRegistration />} />
           <Route path="/guide-dashboard" element={<GuideDashboard />}>
