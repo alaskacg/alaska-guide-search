@@ -110,6 +110,141 @@ export type Database = {
         }
         Relationships: []
       }
+      guide_availability: {
+        Row: {
+          created_at: string
+          date: string
+          end_time: string
+          guide_profile_id: string
+          id: string
+          is_available: boolean | null
+          notes: string | null
+          start_time: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          end_time: string
+          guide_profile_id: string
+          id?: string
+          is_available?: boolean | null
+          notes?: string | null
+          start_time: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          end_time?: string
+          guide_profile_id?: string
+          id?: string
+          is_available?: boolean | null
+          notes?: string | null
+          start_time?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_availability_guide_profile_id_fkey"
+            columns: ["guide_profile_id"]
+            isOneToOne: false
+            referencedRelation: "guide_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guide_blocked_dates: {
+        Row: {
+          created_at: string
+          end_date: string
+          guide_profile_id: string
+          id: string
+          reason: string | null
+          start_date: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          end_date: string
+          guide_profile_id: string
+          id?: string
+          reason?: string | null
+          start_date: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          end_date?: string
+          guide_profile_id?: string
+          id?: string
+          reason?: string | null
+          start_date?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_blocked_dates_guide_profile_id_fkey"
+            columns: ["guide_profile_id"]
+            isOneToOne: false
+            referencedRelation: "guide_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guide_media: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          file_path: string
+          file_type: string
+          guide_profile_id: string
+          id: string
+          is_cover_image: boolean | null
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          file_path: string
+          file_type: string
+          guide_profile_id: string
+          id?: string
+          is_cover_image?: boolean | null
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          file_path?: string
+          file_type?: string
+          guide_profile_id?: string
+          id?: string
+          is_cover_image?: boolean | null
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_media_guide_profile_id_fkey"
+            columns: ["guide_profile_id"]
+            isOneToOne: false
+            referencedRelation: "guide_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       guide_profiles: {
         Row: {
           application_id: string
@@ -186,6 +321,56 @@ export type Database = {
             columns: ["application_id"]
             isOneToOne: false
             referencedRelation: "guide_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guide_recurring_availability: {
+        Row: {
+          created_at: string
+          day_of_week: number
+          effective_from: string | null
+          effective_until: string | null
+          end_time: string
+          guide_profile_id: string
+          id: string
+          is_active: boolean | null
+          start_time: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          day_of_week: number
+          effective_from?: string | null
+          effective_until?: string | null
+          end_time: string
+          guide_profile_id: string
+          id?: string
+          is_active?: boolean | null
+          start_time: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          day_of_week?: number
+          effective_from?: string | null
+          effective_until?: string | null
+          end_time?: string
+          guide_profile_id?: string
+          id?: string
+          is_active?: boolean | null
+          start_time?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_recurring_availability_guide_profile_id_fkey"
+            columns: ["guide_profile_id"]
+            isOneToOne: false
+            referencedRelation: "guide_profiles"
             referencedColumns: ["id"]
           },
         ]
