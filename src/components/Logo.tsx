@@ -20,7 +20,7 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
-      {/* Abstract Geometric Mark - Northern Lights + Mountain abstraction */}
+      {/* Abstract Geometric Mark */}
       <svg 
         width={s.icon} 
         height={s.icon} 
@@ -29,24 +29,22 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
         className="flex-shrink-0"
       >
         <defs>
-          {/* Aurora gradient */}
-          <linearGradient id="aurora" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#2DD4BF" />
-            <stop offset="50%" stopColor="#0EA5E9" />
-            <stop offset="100%" stopColor="#6366F1" />
+          {/* Crimson gradient */}
+          <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#DC2626" />
+            <stop offset="100%" stopColor="#991B1B" />
           </linearGradient>
-          {/* Warm accent */}
-          <linearGradient id="warmAccent" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#F59E0B" />
-            <stop offset="100%" stopColor="#FBBF24" />
+          {/* Light accent for contrast */}
+          <linearGradient id="lightAccent" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#F5F5F5" />
+            <stop offset="100%" stopColor="#E5E5E5" />
           </linearGradient>
         </defs>
         
         {/* Main geometric shape - abstract A / mountain peak */}
         <path
           d="M24 6L42 38H6L24 6Z"
-          fill="url(#aurora)"
-          opacity="0.9"
+          fill="url(#crimsonGrad)"
         />
         
         {/* Inner cutout creating depth */}
@@ -55,15 +53,15 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
           fill="hsl(200 20% 6%)"
         />
         
-        {/* North star / compass point */}
+        {/* North star accent */}
         <motion.circle
           cx="24"
           cy="12"
-          r="2.5"
-          fill="url(#warmAccent)"
-          initial={{ opacity: 0.8 }}
-          animate={{ opacity: [0.8, 1, 0.8] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          r="2"
+          fill="url(#lightAccent)"
+          initial={{ opacity: 0.9 }}
+          animate={{ opacity: [0.9, 1, 0.9] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
       </svg>
       

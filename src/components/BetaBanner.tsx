@@ -53,7 +53,7 @@ const BetaBanner = ({ variant = "hero" }: BetaBannerProps) => {
                 <span>Priority support & feedback</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
-                <Clock className="h-4 w-4 text-amber-500" />
+                <Clock className="h-4 w-4 text-accent" />
                 <span>Limited time opportunity</span>
               </div>
             </div>

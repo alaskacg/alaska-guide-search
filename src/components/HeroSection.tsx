@@ -106,7 +106,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.1 + index * 0.06 }}
-                whileHover={{ y: -2, borderColor: "hsl(38 92% 50% / 0.5)" }}
+                whileHover={{ y: -2, borderColor: "hsl(0 72% 50% / 0.5)" }}
                 className="px-4 py-2 rounded-full bg-card/40 border border-border/40 text-sm text-muted-foreground hover:text-foreground transition-all duration-200"
               >
                 {category}

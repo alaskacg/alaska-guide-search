@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* Alaska Guide Search - Refined Dark Palette */
+    /* Alaska Guide Search - Refined Dark Palette with Red Accent */
     --background: 200 20% 6%;
     --foreground: 40 15% 94%;
 
@@ -28,9 +28,9 @@
     --muted: 200 15% 14%;
     --muted-foreground: 200 10% 55%;
 
-    /* Warm Amber - CTAs & Highlights */
-    --accent: 38 92% 50%;
-    --accent-foreground: 200 20% 6%;
+    /* Deep Red - CTAs & Highlights */
+    --accent: 0 72% 50%;
+    --accent-foreground: 0 0% 100%;
 
     /* Alert Red */
     --destructive: 0 65% 48%;
@@ -38,7 +38,7 @@
 
     --border: 200 15% 18%;
     --input: 200 15% 18%;
-    --ring: 38 92% 50%;
+    --ring: 0 72% 50%;
 
     --radius: 0.625rem;
 
@@ -50,25 +50,24 @@
     --mountain: 215 22% 22%;
     --mountain-peak: 200 15% 35%;
     --snow: 40 15% 94%;
-    --amber-glow: 38 100% 58%;
-    --trust-blue: 215 50% 42%;
-    --wilderness-gold: 38 92% 50%;
-    --crimson: 0 65% 48%;
+    --crimson: 0 72% 50%;
+    --crimson-deep: 0 75% 40%;
+    --crimson-glow: 0 80% 55%;
 
     /* Refined Gradients */
     --gradient-hero: linear-gradient(160deg, hsl(200 20% 6% / 0.97), hsl(165 40% 16% / 0.85));
     --gradient-trust: linear-gradient(135deg, hsl(165 40% 20%), hsl(215 30% 26%));
-    --gradient-cta: linear-gradient(135deg, hsl(38 92% 50%), hsl(28 85% 45%));
+    --gradient-cta: linear-gradient(135deg, hsl(0 72% 50%), hsl(0 80% 40%));
     --gradient-card: linear-gradient(180deg, hsl(200 18% 12%), hsl(200 18% 8%));
-    --gradient-gold: linear-gradient(135deg, hsl(38 92% 55%), hsl(28 90% 42%));
+    --gradient-accent: linear-gradient(135deg, hsl(0 72% 55%), hsl(0 75% 42%));
     --gradient-subtle: linear-gradient(180deg, transparent, hsl(200 20% 6% / 0.8));
 
     /* Refined Shadows */
     --shadow-soft: 0 4px 24px -4px hsl(0 0% 0% / 0.35);
     --shadow-card: 0 8px 40px -8px hsl(0 0% 0% / 0.45);
     --shadow-elevated: 0 24px 60px -12px hsl(0 0% 0% / 0.55);
-    --shadow-glow: 0 0 50px hsl(38 92% 50% / 0.2);
-    --shadow-gold: 0 8px 30px hsl(38 92% 50% / 0.25);
+    --shadow-glow: 0 0 50px hsl(0 72% 50% / 0.2);
+    --shadow-accent: 0 8px 30px hsl(0 72% 50% / 0.25);
     --shadow-inner: inset 0 2px 4px hsl(0 0% 0% / 0.2);
 
     --sidebar-background: 200 18% 8%;
@@ -78,11 +77,10 @@
     --sidebar-accent: 200 15% 14%;
     --sidebar-accent-foreground: 40 15% 94%;
     --sidebar-border: 200 15% 18%;
-    --sidebar-ring: 38 92% 50%;
+    --sidebar-ring: 0 72% 50%;
   }
 
   .dark {
-    /* Same as root - dark by default */
     --background: 200 20% 6%;
     --foreground: 40 15% 94%;
     --card: 200 18% 10%;
@@ -95,13 +93,13 @@
     --secondary-foreground: 215 20% 96%;
     --muted: 200 15% 14%;
     --muted-foreground: 200 10% 55%;
-    --accent: 38 92% 50%;
-    --accent-foreground: 200 20% 6%;
+    --accent: 0 72% 50%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 65% 48%;
     --destructive-foreground: 40 30% 96%;
     --border: 200 15% 18%;
     --input: 200 15% 18%;
-    --ring: 38 92% 50%;
+    --ring: 0 72% 50%;
   }
 }
 
@@ -129,9 +127,9 @@
     background-image: var(--gradient-trust);
   }
 
-  .text-gradient-gold {
+  .text-gradient-accent {
     @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-gold);
+    background-image: var(--gradient-accent);
   }
 
   .bg-gradient-hero {
@@ -170,8 +168,8 @@
     box-shadow: var(--shadow-glow);
   }
 
-  .shadow-gold {
-    box-shadow: var(--shadow-gold);
+  .shadow-accent {
+    box-shadow: var(--shadow-accent);
   }
 
   .shadow-inner-custom {
