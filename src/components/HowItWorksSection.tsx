@@ -1,5 +1,6 @@
 import { Search, Calendar, Shield, Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { GridPattern, NoiseTexture } from "./backgrounds";
 
 const HowItWorksSection = () => {
   const steps = [
@@ -30,8 +31,32 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 bg-muted/30 noise-overlay">
-      <div className="container mx-auto px-4">
+    <section id="how-it-works" className="py-24 bg-muted/30 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <GridPattern animated />
+        <NoiseTexture />
+        
+        {/* Floating geometric shapes */}
+        <motion.div
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute top-20 right-20 w-32 h-32 border border-accent/10 rounded-full"
+        />
+        <motion.div
+          animate={{
+            rotate: [360, 0],
+            y: [0, 20, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-20 left-20 w-24 h-24 border border-glacier/10 rounded-lg rotate-45"
+        />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="max-w-2xl mx-auto text-center mb-16">
           <motion.span 

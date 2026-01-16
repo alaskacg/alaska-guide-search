@@ -1,6 +1,7 @@
 import CategoryCard from "./CategoryCard";
 import { TreePine, Fish, Target, Plane } from "lucide-react";
 import { motion } from "framer-motion";
+import { ParticleField, NoiseTexture } from "./backgrounds";
 
 import ecoImage from "@/assets/category-eco.jpg";
 import huntingImage from "@/assets/category-hunting.jpg";
@@ -15,6 +16,7 @@ const CategoriesSection = () => {
       description: "Bear viewing, glacier hikes, and aurora expeditions with guides who keep you safe.",
       count: 124,
       image: ecoImage,
+      href: "/eco-tours",
     },
     {
       icon: Target,
@@ -22,6 +24,7 @@ const CategoriesSection = () => {
       description: "Guided hunts for moose, caribou, and bear in remote wilderness.",
       count: 86,
       image: huntingImage,
+      href: "/hunting",
     },
     {
       icon: Fish,
@@ -29,6 +32,7 @@ const CategoriesSection = () => {
       description: "World-class salmon and halibut fishing with experienced captains.",
       count: 152,
       image: fishingImage,
+      href: "/fishing",
     },
     {
       icon: Plane,
@@ -36,12 +40,36 @@ const CategoriesSection = () => {
       description: "Certified pilots for glacier landings and remote access.",
       count: 67,
       image: flightsImage,
+      href: "/flights",
     },
   ];
 
   return (
-    <section id="categories" className="py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="categories" className="py-24 bg-background relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <ParticleField count={25} color="accent" speed={0.3} />
+        <NoiseTexture />
+        {/* Subtle gradient orbs */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.05, 0.1, 0.05],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-accent/10 blur-[100px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.08, 0.04, 0.08],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-glacier/10 blur-[100px]"
+        />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="max-w-2xl mb-16">
           <motion.span 

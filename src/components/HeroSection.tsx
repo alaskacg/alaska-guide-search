@@ -3,8 +3,17 @@ import TrustBadges from "./TrustBadges";
 import heroImage from "@/assets/hero-alaska.jpg";
 import { Search, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { AuroraBackground, ParticleField, NoiseTexture } from "./backgrounds";
 
 const HeroSection = () => {
+  const categoryLinks = [
+    { name: "Hunting", href: "/hunting" },
+    { name: "Fishing", href: "/fishing" },
+    { name: "Eco-Tours", href: "/eco-tours" },
+    { name: "Bush Flights", href: "/flights" },
+  ];
+
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       {/* Background Image with Ken Burns effect */}
@@ -20,6 +29,13 @@ const HeroSection = () => {
         {/* Centered radial gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background)/0.8)_70%)]" />
+      </div>
+
+      {/* Animated Effects Layer */}
+      <div className="absolute inset-0 pointer-events-none">
+        <AuroraBackground />
+        <ParticleField count={40} color="glacier" speed={0.4} />
+        <NoiseTexture />
       </div>
 
       {/* Centered Content */}
@@ -83,24 +99,29 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Quick Categories */}
+          {/* Quick Categories - Now with Links */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
             className="flex flex-wrap justify-center gap-2 mb-10"
           >
-            {["Hunting", "Fishing", "Eco-Tours", "Bush Flights", "Adventure"].map((category, index) => (
-              <motion.button
-                key={category}
+            {categoryLinks.map((category, index) => (
+              <motion.div
+                key={category.name}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.1 + index * 0.06 }}
-                whileHover={{ y: -2, borderColor: "hsl(0 72% 50% / 0.5)" }}
-                className="px-4 py-2 rounded-full bg-card/40 border border-border/40 text-sm text-muted-foreground hover:text-foreground transition-all duration-200"
               >
-                {category}
-              </motion.button>
+                <Link to={category.href}>
+                  <motion.span
+                    whileHover={{ y: -2, borderColor: "hsl(0 72% 50% / 0.5)" }}
+                    className="inline-block px-4 py-2 rounded-full bg-card/40 border border-border/40 text-sm text-muted-foreground hover:text-foreground transition-all duration-200"
+                  >
+                    {category.name}
+                  </motion.span>
+                </Link>
+              </motion.div>
             ))}
           </motion.div>
 
