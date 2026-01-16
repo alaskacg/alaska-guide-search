@@ -72,15 +72,19 @@ export default {
         mountain: "hsl(var(--mountain))",
         snow: "hsl(var(--snow))",
         amber: {
-          glow: "hsl(var(--amber-glow))",
+          glow: "hsl(var(--crimson-glow))",
         },
         trust: {
           blue: "hsl(var(--trust-blue))",
         },
         wilderness: {
-          gold: "hsl(var(--wilderness-gold))",
+          gold: "hsl(var(--crimson))",
         },
-        crimson: "hsl(var(--crimson))",
+        crimson: {
+          DEFAULT: "hsl(var(--crimson))",
+          deep: "hsl(var(--crimson-deep))",
+          glow: "hsl(var(--crimson-glow))",
+        },
         danger: "hsl(var(--destructive))",
       },
       borderRadius: {

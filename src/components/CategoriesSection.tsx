@@ -2,6 +2,11 @@ import CategoryCard from "./CategoryCard";
 import { TreePine, Fish, Target, Plane } from "lucide-react";
 import { motion } from "framer-motion";
 
+import ecoImage from "@/assets/category-eco.jpg";
+import huntingImage from "@/assets/category-hunting.jpg";
+import fishingImage from "@/assets/category-fishing.jpg";
+import flightsImage from "@/assets/category-flights.jpg";
+
 const CategoriesSection = () => {
   const categories = [
     {
@@ -9,35 +14,35 @@ const CategoriesSection = () => {
       title: "Eco-Tours & Wildlife",
       description: "Bear viewing, glacier hikes, and aurora expeditions with guides who keep you safe.",
       count: 124,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+      image: ecoImage,
     },
     {
       icon: Target,
       title: "Hunting Expeditions",
       description: "Guided hunts for moose, caribou, and bear in remote wilderness.",
       count: 86,
-      image: "https://images.unsplash.com/photo-1571687949921-1306bfb24b72?w=600&q=80",
+      image: huntingImage,
     },
     {
       icon: Fish,
       title: "Fishing Adventures",
       description: "World-class salmon and halibut fishing with experienced captains.",
       count: 152,
-      image: "https://images.unsplash.com/photo-1504472478235-9bc48ba4d60f?w=600&q=80",
+      image: fishingImage,
     },
     {
       icon: Plane,
       title: "Bush Flights",
       description: "Certified pilots for glacier landings and remote access.",
       count: 67,
-      image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=600&q=80",
+      image: flightsImage,
     },
   ];
 
   return (
-    <section id="categories" className="py-24 bg-background noise-overlay">
+    <section id="categories" className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        {/* Section Header - Clean & Minimal */}
+        {/* Section Header */}
         <div className="max-w-2xl mb-16">
           <motion.span 
             initial={{ opacity: 0 }}
@@ -69,7 +74,7 @@ const CategoriesSection = () => {
           </motion.p>
         </div>
 
-        {/* Category Grid - Refined Layout */}
+        {/* Category Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {categories.map((category, index) => (
             <CategoryCard
