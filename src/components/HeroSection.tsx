@@ -53,7 +53,7 @@ const HeroSection = () => {
             className="flex items-center justify-center gap-3 mb-10 text-sm text-muted-foreground"
           >
             <div className="w-8 h-px bg-accent" />
-            <span>Book with only <span className="text-accent font-semibold">20% down</span> — half the industry standard</span>
+            <span>Book with only <span className="text-accent font-semibold">25% down</span> — half the industry standard</span>
             <div className="w-8 h-px bg-accent" />
           </motion.div>
 
