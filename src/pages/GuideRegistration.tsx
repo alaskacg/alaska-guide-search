@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle2, Shield, FileText, User, Briefcase, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Shield, FileText, User, Briefcase, MapPin, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import BetaBanner from "@/components/BetaBanner";
@@ -17,7 +17,7 @@ const steps = [
   { id: 1, title: "Personal Info", icon: User },
   { id: 2, title: "Business Details", icon: Briefcase },
   { id: 3, title: "Service Areas", icon: MapPin },
-  { id: 4, title: "Verification", icon: Shield },
+  { id: 4, title: "Go Live", icon: Sparkles },
 ];
 
 const serviceTypes: { id: "adventure" | "eco" | "hunting" | "fishing" | "pilot"; label: string }[] = [
@@ -45,7 +45,7 @@ const GuideRegistration = () => {
     addressLine1: "", addressLine2: "", city: "", state: "Alaska", zipCode: "",
     businessName: "", businessLicenseNumber: "", yearsOfExperience: "",
     serviceTypes: [] as ("adventure" | "eco" | "hunting" | "fishing" | "pilot")[], serviceAreas: [] as string[],
-    bio: "", websiteUrl: "",
+    bio: "", websiteUrl: "", tagline: "",
     agreeTerms: false, agreeVerification: false,
   });
 
@@ -85,7 +85,8 @@ const GuideRegistration = () => {
     }
     setLoading(true);
     try {
-      const { error } = await supabase.from("guide_applications").insert([{
+      // Create the application
+      const { data: applicationData, error: appError } = await supabase.from("guide_applications").insert([{
         user_id: user.id,
         full_legal_name: formData.fullLegalName,
         date_of_birth: formData.dateOfBirth,
@@ -102,16 +103,47 @@ const GuideRegistration = () => {
         service_areas: formData.serviceAreas,
         bio: formData.bio || null,
         website_url: formData.websiteUrl || null,
+        status: 'approved', // Auto-approve during beta
+      }]).select().single();
+
+      if (appError) throw appError;
+
+      // During BETA: Auto-create guide profile immediately
+      const displayName = formData.businessName || formData.fullLegalName.split(' ')[0];
+      
+      const { error: profileError } = await supabase.from("guide_profiles").insert([{
+        user_id: user.id,
+        application_id: applicationData.id,
+        display_name: displayName,
+        business_name: formData.businessName || null,
+        bio: formData.bio || null,
+        tagline: formData.tagline || null,
+        website_url: formData.websiteUrl || null,
+        years_of_experience: parseInt(formData.yearsOfExperience),
+        service_types: formData.serviceTypes,
+        service_areas: formData.serviceAreas,
+        is_verified: true, // Auto-verify during beta
+        is_active: true,
+        beta_started_at: new Date().toISOString(),
+        subscription_status: 'beta_free',
       }]);
-      if (error) throw error;
-      toast({ title: "Application Submitted!", description: "We'll review your application within 2-3 business days." });
-      navigate("/");
+
+      if (profileError) throw profileError;
+
+      toast({ 
+        title: "🎉 Welcome to the Beta!", 
+        description: "Your guide profile is now live. You have 60 days of free access to all features!" 
+      });
+      navigate("/guide-dashboard");
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
   };
+
+  const betaEndDate = new Date();
+  betaEndDate.setDate(betaEndDate.getDate() + 60);
 
   return (
     <div className="min-h-screen bg-background">
@@ -123,13 +155,28 @@ const GuideRegistration = () => {
           </Link>
 
           {/* Beta Banner for Guides */}
-          <BetaBanner variant="guide" />
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 p-4 rounded-xl bg-gradient-to-r from-accent/20 via-primary/20 to-accent/20 border border-accent/30"
+          >
+            <div className="flex items-center gap-3">
+              <Sparkles className="h-5 w-5 text-accent" />
+              <div>
+                <p className="font-semibold text-foreground">🚀 Beta Launch Special</p>
+                <p className="text-sm text-muted-foreground">
+                  List your guide services <span className="text-accent font-semibold">FREE for 60 days</span>! 
+                  No credit card required. Full access to all features.
+                </p>
+              </div>
+            </div>
+          </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Become a <span className="text-gradient-gold">Verified Guide</span>
+              Create Your <span className="text-gradient-gold">Guide Profile</span>
             </h1>
-            <p className="text-muted-foreground">Join Alaska's premier guide platform. Complete verification to start receiving bookings.</p>
+            <p className="text-muted-foreground">Go live instantly during our beta period. Start receiving bookings today!</p>
           </motion.div>
 
           {/* Progress Steps */}
@@ -188,7 +235,7 @@ const GuideRegistration = () => {
 
             {step === 3 && (
               <div className="space-y-4">
-                <h2 className="font-display text-xl font-bold text-foreground mb-4">Service Areas</h2>
+                <h2 className="font-display text-xl font-bold text-foreground mb-4">Service Areas & Profile</h2>
                 <div><Label>Select regions you operate in *</Label>
                   <div className="grid grid-cols-2 gap-2 mt-2">
                     {alaskaRegions.map((area) => (
@@ -200,6 +247,7 @@ const GuideRegistration = () => {
                     ))}
                   </div>
                 </div>
+                <div><Label>Tagline</Label><Input value={formData.tagline} onChange={(e) => updateField("tagline", e.target.value)} placeholder="e.g., 'Master Salmon Guide - 20 Years on the Kenai'" className="mt-1" /></div>
                 <div><Label>Bio / About You</Label><Textarea value={formData.bio} onChange={(e) => updateField("bio", e.target.value)} placeholder="Tell potential clients about your experience, specialties, and what makes your trips unique..." className="mt-1 min-h-[120px]" /></div>
                 <div><Label>Website URL</Label><Input value={formData.websiteUrl} onChange={(e) => updateField("websiteUrl", e.target.value)} placeholder="https://yourwebsite.com" className="mt-1" /></div>
               </div>
@@ -207,10 +255,48 @@ const GuideRegistration = () => {
 
             {step === 4 && (
               <div className="space-y-6">
-                <h2 className="font-display text-xl font-bold text-foreground mb-4">Verification & Agreement</h2>
+                <h2 className="font-display text-xl font-bold text-foreground mb-4">Go Live Now!</h2>
+                
+                {/* Beta Benefits */}
+                <div className="glass-dark rounded-xl p-6 space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-accent" />
+                    <h3 className="font-semibold text-foreground">Your Beta Benefits</h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <span>Unlimited listings</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <span>Unlimited photos & videos</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <span>Real-time availability</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <span>Your own profile page</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <span>Featured in category pages</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <span>Zero platform fees*</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    *During beta period. After {betaEndDate.toLocaleDateString()}, subscription tiers will apply.
+                  </p>
+                </div>
+
                 <div className="glass-dark rounded-xl p-4 space-y-2">
-                  <h3 className="font-semibold text-foreground flex items-center gap-2"><FileText className="h-4 w-4 text-accent" /> Required Documents</h3>
-                  <p className="text-sm text-muted-foreground">After submitting, you'll receive an email to upload:</p>
+                  <h3 className="font-semibold text-foreground flex items-center gap-2"><FileText className="h-4 w-4 text-accent" /> Optional Documents (For Verified Badge)</h3>
+                  <p className="text-sm text-muted-foreground">Upload these later in your dashboard to earn a verified badge:</p>
                   <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1">
                     <li>Government-issued photo ID</li>
                     <li>Alaska Guide License (if applicable)</li>
@@ -218,6 +304,7 @@ const GuideRegistration = () => {
                     <li>CPR/First Aid certification</li>
                   </ul>
                 </div>
+
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <Checkbox id="terms" checked={formData.agreeTerms} onCheckedChange={(v) => updateField("agreeTerms", v)} />
@@ -225,7 +312,7 @@ const GuideRegistration = () => {
                   </div>
                   <div className="flex items-start gap-3">
                     <Checkbox id="verify" checked={formData.agreeVerification} onCheckedChange={(v) => updateField("agreeVerification", v)} />
-                    <Label htmlFor="verify" className="text-sm text-muted-foreground leading-relaxed">I consent to background verification and confirm all information provided is accurate.</Label>
+                    <Label htmlFor="verify" className="text-sm text-muted-foreground leading-relaxed">I confirm all information provided is accurate and I have the legal right to offer guide services in Alaska.</Label>
                   </div>
                 </div>
               </div>
@@ -237,7 +324,9 @@ const GuideRegistration = () => {
               {step < 4 ? (
                 <Button variant="hero" onClick={() => setStep(s => s + 1)}>Continue <ArrowRight className="h-4 w-4 ml-2" /></Button>
               ) : (
-                <Button variant="hero" onClick={handleSubmit} disabled={loading}>{loading ? "Submitting..." : "Submit Application"}</Button>
+                <Button variant="hero" onClick={handleSubmit} disabled={loading} className="min-w-[200px]">
+                  {loading ? "Creating Profile..." : "🚀 Launch My Profile"}
+                </Button>
               )}
             </div>
           </motion.div>
