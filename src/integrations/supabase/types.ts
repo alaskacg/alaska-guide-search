@@ -195,6 +195,137 @@ export type Database = {
           },
         ]
       }
+      guide_listings: {
+        Row: {
+          average_rating: number | null
+          booking_count: number | null
+          cancellation_policy: string | null
+          category: string
+          created_at: string
+          deposit_percentage: number | null
+          description: string | null
+          difficulty_level: string | null
+          duration_days: number | null
+          duration_hours: number | null
+          featured_image_url: string | null
+          gallery_images: string[] | null
+          guide_profile_id: string
+          id: string
+          included_items: string[] | null
+          is_active: boolean | null
+          is_featured: boolean | null
+          license_info: string | null
+          license_required: boolean | null
+          max_group_size: number | null
+          meeting_instructions: string | null
+          meeting_point: string | null
+          min_age: number | null
+          min_group_size: number | null
+          not_included_items: string[] | null
+          physical_requirements: string | null
+          price_per_group: number | null
+          price_per_person: number | null
+          seasonal_availability: string[] | null
+          short_description: string | null
+          slug: string
+          title: string
+          total_reviews: number | null
+          updated_at: string
+          user_id: string
+          video_url: string | null
+          view_count: number | null
+          what_to_bring: string[] | null
+        }
+        Insert: {
+          average_rating?: number | null
+          booking_count?: number | null
+          cancellation_policy?: string | null
+          category: string
+          created_at?: string
+          deposit_percentage?: number | null
+          description?: string | null
+          difficulty_level?: string | null
+          duration_days?: number | null
+          duration_hours?: number | null
+          featured_image_url?: string | null
+          gallery_images?: string[] | null
+          guide_profile_id: string
+          id?: string
+          included_items?: string[] | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          license_info?: string | null
+          license_required?: boolean | null
+          max_group_size?: number | null
+          meeting_instructions?: string | null
+          meeting_point?: string | null
+          min_age?: number | null
+          min_group_size?: number | null
+          not_included_items?: string[] | null
+          physical_requirements?: string | null
+          price_per_group?: number | null
+          price_per_person?: number | null
+          seasonal_availability?: string[] | null
+          short_description?: string | null
+          slug: string
+          title: string
+          total_reviews?: number | null
+          updated_at?: string
+          user_id: string
+          video_url?: string | null
+          view_count?: number | null
+          what_to_bring?: string[] | null
+        }
+        Update: {
+          average_rating?: number | null
+          booking_count?: number | null
+          cancellation_policy?: string | null
+          category?: string
+          created_at?: string
+          deposit_percentage?: number | null
+          description?: string | null
+          difficulty_level?: string | null
+          duration_days?: number | null
+          duration_hours?: number | null
+          featured_image_url?: string | null
+          gallery_images?: string[] | null
+          guide_profile_id?: string
+          id?: string
+          included_items?: string[] | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          license_info?: string | null
+          license_required?: boolean | null
+          max_group_size?: number | null
+          meeting_instructions?: string | null
+          meeting_point?: string | null
+          min_age?: number | null
+          min_group_size?: number | null
+          not_included_items?: string[] | null
+          physical_requirements?: string | null
+          price_per_group?: number | null
+          price_per_person?: number | null
+          seasonal_availability?: string[] | null
+          short_description?: string | null
+          slug?: string
+          title?: string
+          total_reviews?: number | null
+          updated_at?: string
+          user_id?: string
+          video_url?: string | null
+          view_count?: number | null
+          what_to_bring?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_listings_guide_profile_id_fkey"
+            columns: ["guide_profile_id"]
+            isOneToOne: false
+            referencedRelation: "guide_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       guide_media: {
         Row: {
           created_at: string
@@ -250,6 +381,7 @@ export type Database = {
           application_id: string
           avatar_url: string | null
           average_rating: number | null
+          beta_started_at: string | null
           bio: string | null
           business_name: string | null
           cover_image_url: string | null
@@ -260,6 +392,7 @@ export type Database = {
           is_verified: boolean | null
           service_areas: string[]
           service_types: Database["public"]["Enums"]["guide_service_type"][]
+          subscription_status: string | null
           tagline: string | null
           total_bookings: number | null
           total_reviews: number | null
@@ -273,6 +406,7 @@ export type Database = {
           application_id: string
           avatar_url?: string | null
           average_rating?: number | null
+          beta_started_at?: string | null
           bio?: string | null
           business_name?: string | null
           cover_image_url?: string | null
@@ -283,6 +417,7 @@ export type Database = {
           is_verified?: boolean | null
           service_areas: string[]
           service_types: Database["public"]["Enums"]["guide_service_type"][]
+          subscription_status?: string | null
           tagline?: string | null
           total_bookings?: number | null
           total_reviews?: number | null
@@ -296,6 +431,7 @@ export type Database = {
           application_id?: string
           avatar_url?: string | null
           average_rating?: number | null
+          beta_started_at?: string | null
           bio?: string | null
           business_name?: string | null
           cover_image_url?: string | null
@@ -306,6 +442,7 @@ export type Database = {
           is_verified?: boolean | null
           service_areas?: string[]
           service_types?: Database["public"]["Enums"]["guide_service_type"][]
+          subscription_status?: string | null
           tagline?: string | null
           total_bookings?: number | null
           total_reviews?: number | null
@@ -368,6 +505,80 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "guide_recurring_availability_guide_profile_id_fkey"
+            columns: ["guide_profile_id"]
+            isOneToOne: false
+            referencedRelation: "guide_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guide_subscriptions: {
+        Row: {
+          analytics_access: string | null
+          can_feature_listings: boolean | null
+          commission_rate: number | null
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string
+          guide_profile_id: string
+          id: string
+          max_listings: number | null
+          max_photos_per_listing: number | null
+          max_videos_per_listing: number | null
+          priority_support: boolean | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          tier: string
+          trial_ends_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          analytics_access?: string | null
+          can_feature_listings?: boolean | null
+          commission_rate?: number | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string
+          guide_profile_id: string
+          id?: string
+          max_listings?: number | null
+          max_photos_per_listing?: number | null
+          max_videos_per_listing?: number | null
+          priority_support?: boolean | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          tier: string
+          trial_ends_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          analytics_access?: string | null
+          can_feature_listings?: boolean | null
+          commission_rate?: number | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string
+          guide_profile_id?: string
+          id?: string
+          max_listings?: number | null
+          max_photos_per_listing?: number | null
+          max_videos_per_listing?: number | null
+          priority_support?: boolean | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          tier?: string
+          trial_ends_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_subscriptions_guide_profile_id_fkey"
             columns: ["guide_profile_id"]
             isOneToOne: false
             referencedRelation: "guide_profiles"

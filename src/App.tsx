@@ -11,6 +11,7 @@ import FlightsPage from "./pages/categories/FlightsPage";
 import Auth from "./pages/Auth";
 import GuideRegistration from "./pages/GuideRegistration";
 import GuideDashboard from "./pages/GuideDashboard";
+import GuideProfile from "./pages/GuideProfile";
 import Overview from "./pages/guide-dashboard/Overview";
 import Profile from "./pages/guide-dashboard/Profile";
 import Media from "./pages/guide-dashboard/Media";
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/flights" element={<FlightsPage />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/guide-registration" element={<GuideRegistration />} />
+          <Route path="/guide/:guideId" element={<GuideProfile />} />
           <Route path="/guide-dashboard" element={<GuideDashboard />}>
             <Route index element={<Overview />} />
             <Route path="profile" element={<Profile />} />
