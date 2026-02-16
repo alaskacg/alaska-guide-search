@@ -25,4 +25,5 @@ const TrustBadges = () => (
   </div>
 );
 
+export { TrustBadges };
 export default TrustBadges;
