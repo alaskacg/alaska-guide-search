@@ -71,3 +71,41 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Stripe Payment Setup
+
+This site uses Stripe for $10 flat-fee listing payments.
+
+### Configuration
+
+1. Create a Stripe account at https://stripe.com
+2. Get your API keys from the Stripe Dashboard
+3. Create a `.env` file based on `.env.example`:
+   ```
+   VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
+   VITE_STRIPE_SECRET_KEY=sk_test_...
+   ```
+
+### Features
+
+- **$10 flat fee** for 60-day listings
+- One-time payment checkout
+- Instant listing activation
+- Simple seller onboarding
+
+### Usage
+
+Import and use the `StripeListingCheckout` component in your listing forms:
+
+```tsx
+import StripeListingCheckout from './components/StripeListingCheckout';
+
+// In your component:
+<StripeListingCheckout 
+  clientSecret={paymentIntent.client_secret}
+  onSuccess={() => {
+    // Handle successful payment
+    activateListing();
+  }}
+/>
+```
