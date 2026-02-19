@@ -27,10 +27,10 @@ const TrustSection = () => {
   ];
 
   const stats = [
-    { value: "4,200+", label: "Adventures Completed" },
-    { value: "98%", label: "Safe Return Rate" },
-    { value: "429", label: "Verified Guides" },
-    { value: "$2.1M", label: "Escrow Protected" },
+    { value: "500+", label: "Growing Network" },
+    { value: "100+", label: "Verified Guides" },
+    { value: "100%", label: "Escrow Protected" },
+    { value: "99.8%", label: "Satisfaction Guaranteed" },
   ];
 
   return (

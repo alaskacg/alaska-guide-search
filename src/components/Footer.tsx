@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Facebook, Instagram, Youtube, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
 import { motion } from "framer-motion";
@@ -6,31 +6,30 @@ import { motion } from "framer-motion";
 const Footer = () => {
   const links = {
     explore: [
-      { label: "Adventure Guides", href: "#" },
-      { label: "Eco-Tours", href: "#" },
-      { label: "Hunting Guides", href: "#" },
-      { label: "Fishing Charters", href: "#" },
-      { label: "Bush Flights", href: "#" },
+      { label: "Adventure Guides", href: "/fishing" },
+      { label: "Eco-Tours", href: "/eco-tours" },
+      { label: "Hunting Guides", href: "/hunting" },
+      { label: "Fishing Charters", href: "/fishing" },
+      { label: "Bush Flights", href: "/flights" },
     ],
     company: [
-      { label: "About Us", href: "#" },
-      { label: "How It Works", href: "#how-it-works" },
+      { label: "About Us", href: "/about" },
+      { label: "How It Works", href: "/#how-it-works" },
       { label: "Become a Guide", href: "/guide-registration" },
-      { label: "Partner With Us", href: "#" },
-      { label: "Careers", href: "#" },
+      { label: "Help Center", href: "/help" },
+      { label: "Safety Resources", href: "/safety" },
     ],
     support: [
-      { label: "Help Center", href: "#" },
-      { label: "Safety Resources", href: "#" },
-      { label: "Travel Insurance", href: "#" },
-      { label: "Cancellation Policy", href: "#" },
-      { label: "Contact Us", href: "#" },
+      { label: "Help Center", href: "/help" },
+      { label: "Safety Resources", href: "/safety" },
+      { label: "Travel Insurance", href: "/safety" },
+      { label: "Cancellation Policy", href: "/cancellation-policy" },
+      { label: "Contact Us", href: "/contact" },
     ],
     legal: [
-      { label: "Terms of Service", href: "#" },
-      { label: "Privacy Policy", href: "#" },
-      { label: "Escrow Agreement", href: "#" },
-      { label: "Cookie Policy", href: "#" },
+      { label: "Terms of Service", href: "/terms" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Escrow Agreement", href: "/escrow" },
     ],
   };
 
@@ -73,13 +72,6 @@ const Footer = () => {
             <a href="/" className="flex items-center gap-2 mb-4">
               <Logo size="md" showText={true} />
             </a>
-            
-            {/* Beta Notice */}
-            <div className="flex items-center gap-2 mb-4 text-xs">
-              <Sparkles className="h-3 w-3 text-accent" />
-              <span className="text-accent font-medium">BETA</span>
-              <span className="text-muted-foreground">— Free guide listings</span>
-            </div>
             
             <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
               Alaska's premier guide search. Verified professionals, 
@@ -173,7 +165,7 @@ const Footer = () => {
         <div className="container mx-auto px-4 py-5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-xs text-muted-foreground">
-              © 2025 Alaska Guide Search. All rights reserved.
+              © 2026 AK Guide Search. All rights reserved. Part of Alaska Consulting Group.
             </p>
             <div className="flex items-center gap-4">
               {[Facebook, Instagram, Youtube].map((Icon, index) => (

@@ -10,8 +10,10 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "Explore Guides", href: "#categories" },
-    { label: "How It Works", href: "#how-it-works" },
+    { label: "Fishing", href: "/fishing" },
+    { label: "Hunting", href: "/hunting" },
+    { label: "Eco-Tours", href: "/eco-tours" },
+    { label: "Flights", href: "/flights" },
     { label: "For Guides", href: "/guide-registration" },
   ];
 

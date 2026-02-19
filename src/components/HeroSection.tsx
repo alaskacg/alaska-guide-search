@@ -58,7 +58,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.5 }}
             className="text-lg sm:text-xl text-muted-foreground mb-6 max-w-2xl mx-auto leading-relaxed"
           >
-            Verified wilderness professionals for hunting, fishing, eco-tours, and bush flights across Alaska.
+            Alaska's #1 Adventure Booking Platform — verified wilderness professionals for hunting, fishing, eco-tours, and bush flights.
           </motion.p>
 
           {/* Key differentiator */}
