@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Mail, Lock, User, ArrowLeft, CheckCircle, Sparkles, Gift } from "lucide-react";
+import { Mail, Lock, User, ArrowLeft, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
-import BetaBanner from "@/components/BetaBanner";
+
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -107,17 +107,6 @@ const Auth = () => {
               Click the link in the email to verify your account and complete signup.
             </p>
 
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/50 text-left mb-6">
-              <h3 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                <Gift className="h-4 w-4 text-accent" />
-                Beta Benefit
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                As a beta user, you'll enjoy free access to all features. 
-                Guides can list for free until we exit beta!
-              </p>
-            </div>
-
             <Button 
               variant="outline" 
               onClick={() => setEmailSent(false)}
@@ -146,7 +135,6 @@ const Auth = () => {
         <div className="glass rounded-2xl p-8">
           <div className="flex items-center justify-between mb-6">
             <Logo size="md" showText={true} />
-            <BetaBanner variant="compact" />
           </div>
 
           <h1 className="font-display text-2xl font-bold text-foreground mb-2">
@@ -155,25 +143,6 @@ const Auth = () => {
           <p className="text-muted-foreground mb-6">
             {isLogin ? "Sign in to continue your adventure" : "Join Alaska's premier guide platform"}
           </p>
-
-          {!isLogin && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="mb-6 p-4 rounded-lg bg-accent/10 border border-accent/30"
-            >
-              <div className="flex items-start gap-3">
-                <Sparkles className="h-5 w-5 text-accent mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-foreground">Beta Launch Special</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Create your account now and enjoy free access during our beta period. 
-                    Guides can list for free — no subscription fees until we officially launch!
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          )}
 
           <form onSubmit={handleAuth} className="space-y-4">
             {!isLogin && (

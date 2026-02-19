@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
-import BetaBanner from "./BetaBanner";
 import { Menu, X, User, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -32,7 +31,6 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-4">
             <Logo size="md" showText={true} />
-            <BetaBanner variant="compact" />
           </Link>
 
           {/* Desktop Navigation */}

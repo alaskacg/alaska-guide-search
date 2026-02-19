@@ -7,7 +7,6 @@ import {
   Eye, 
   Clock, 
   CheckCircle2,
-  AlertTriangle,
   ArrowRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -26,13 +25,13 @@ export default function Overview() {
       icon: Eye, 
       label: "Profile Views", 
       value: "Coming Soon",
-      description: "Track after beta launch"
+      description: "Tracking available soon"
     },
     { 
       icon: Calendar, 
       label: "Total Bookings", 
       value: profile?.total_bookings || 0,
-      description: "Bookings enabled after beta"
+      description: "Total bookings received"
     },
     { 
       icon: Star, 
@@ -86,28 +85,6 @@ export default function Overview() {
               <span className="font-medium">Verified Guide</span>
             </div>
           )}
-        </div>
-      </motion.div>
-
-      {/* Beta Notice */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-accent/5 border border-accent/20 rounded-xl p-6"
-      >
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
-            <AlertTriangle className="h-6 w-6 text-accent" />
-          </div>
-          <div>
-            <h3 className="font-display text-lg text-foreground mb-1">Beta Period - Free Listings</h3>
-            <p className="text-muted-foreground">
-              During our beta period, all guide listings are completely free. You can set up your profile, 
-              upload media, and configure your availability calendar. Booking functionality will be enabled 
-              once we exit beta.
-            </p>
-          </div>
         </div>
       </motion.div>
 

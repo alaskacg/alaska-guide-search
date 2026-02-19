@@ -7,8 +7,7 @@ import {
   Image, 
   FileText, 
   Settings,
-  ExternalLink,
-  AlertCircle
+  ExternalLink
 } from "lucide-react";
 import Logo from "@/components/Logo";
 
@@ -36,20 +35,7 @@ export default function DashboardSidebar({ isVerified = true }: DashboardSidebar
         </Link>
       </div>
 
-      {/* Beta Notice */}
-      <div className="mx-4 mt-4 p-3 rounded-lg bg-accent/10 border border-accent/20">
-        <div className="flex items-start gap-2">
-          <AlertCircle className="h-4 w-4 text-accent mt-0.5 shrink-0" />
-          <div className="text-xs">
-            <p className="font-medium text-foreground">Beta Period</p>
-            <p className="text-muted-foreground mt-1">
-              Free listings during beta. Bookings will be enabled after launch.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-4 mt-4 space-y-1">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (

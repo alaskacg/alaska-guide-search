@@ -139,7 +139,7 @@ export default function Settings() {
           </div>
 
           <p className="text-xs text-muted-foreground italic">
-            Notification preferences coming after beta.
+            Notification preferences coming soon.
           </p>
         </div>
       </motion.div>

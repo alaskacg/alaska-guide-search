@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CheckCircle2, Shield, FileText, User, Briefcase, MapPin, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import BetaBanner from "@/components/BetaBanner";
+
 
 const steps = [
   { id: 1, title: "Personal Info", icon: User },
@@ -103,12 +103,11 @@ const GuideRegistration = () => {
         service_areas: formData.serviceAreas,
         bio: formData.bio || null,
         website_url: formData.websiteUrl || null,
-        status: 'approved', // Auto-approve during beta
+        status: 'approved',
       }]).select().single();
 
       if (appError) throw appError;
 
-      // During BETA: Auto-create guide profile immediately
       const displayName = formData.businessName || formData.fullLegalName.split(' ')[0];
       
       const { error: profileError } = await supabase.from("guide_profiles").insert([{
@@ -122,17 +121,16 @@ const GuideRegistration = () => {
         years_of_experience: parseInt(formData.yearsOfExperience),
         service_types: formData.serviceTypes,
         service_areas: formData.serviceAreas,
-        is_verified: true, // Auto-verify during beta
+        is_verified: true,
         is_active: true,
-        beta_started_at: new Date().toISOString(),
-        subscription_status: 'beta_free',
+        subscription_status: 'free',
       }]);
 
       if (profileError) throw profileError;
 
       toast({ 
-        title: "🎉 Welcome to the Beta!", 
-        description: "Your guide profile is now live. You have 60 days of free access to all features!" 
+        title: "🎉 Welcome!", 
+        description: "Your guide profile is now live. You have full access to all features!" 
       });
       navigate("/guide-dashboard");
     } catch (error: any) {
@@ -141,9 +139,6 @@ const GuideRegistration = () => {
       setLoading(false);
     }
   };
-
-  const betaEndDate = new Date();
-  betaEndDate.setDate(betaEndDate.getDate() + 60);
 
   return (
     <div className="min-h-screen bg-background">
@@ -154,29 +149,11 @@ const GuideRegistration = () => {
             <ArrowLeft className="h-4 w-4" /> Back to home
           </Link>
 
-          {/* Beta Banner for Guides */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-4 rounded-xl bg-gradient-to-r from-accent/20 via-primary/20 to-accent/20 border border-accent/30"
-          >
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-5 w-5 text-accent" />
-              <div>
-                <p className="font-semibold text-foreground">🚀 Beta Launch Special</p>
-                <p className="text-sm text-muted-foreground">
-                  List your guide services <span className="text-accent font-semibold">FREE for 60 days</span>! 
-                  No credit card required. Full access to all features.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
               Create Your <span className="text-gradient-gold">Guide Profile</span>
             </h1>
-            <p className="text-muted-foreground">Go live instantly during our beta period. Start receiving bookings today!</p>
+            <p className="text-muted-foreground">Go live instantly. Start receiving bookings today!</p>
           </motion.div>
 
           {/* Progress Steps */}
@@ -257,11 +234,10 @@ const GuideRegistration = () => {
               <div className="space-y-6">
                 <h2 className="font-display text-xl font-bold text-foreground mb-4">Go Live Now!</h2>
                 
-                {/* Beta Benefits */}
                 <div className="glass-dark rounded-xl p-6 space-y-4">
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-5 w-5 text-accent" />
-                    <h3 className="font-semibold text-foreground">Your Beta Benefits</h3>
+                    <h3 className="font-semibold text-foreground">What's Included</h3>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -286,12 +262,9 @@ const GuideRegistration = () => {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      <span>Zero platform fees*</span>
+                      <span>Zero platform fees</span>
                     </div>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    *During beta period. After {betaEndDate.toLocaleDateString()}, subscription tiers will apply.
-                  </p>
                 </div>
 
                 <div className="glass-dark rounded-xl p-4 space-y-2">

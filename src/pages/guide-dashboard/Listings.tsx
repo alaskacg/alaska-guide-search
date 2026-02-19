@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Plus, Eye, EyeOff, Edit2, Trash2, MoreVertical, DollarSign, Users, Clock, Sparkles } from "lucide-react";
+import { FileText, Plus, Eye, EyeOff, Edit2, Trash2, MoreVertical, DollarSign, Users, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -56,11 +56,6 @@ export default function Listings() {
     setDeleteDialog(null);
   };
 
-  // Beta benefits - all unlimited during beta
-  const betaDaysRemaining = profile?.beta_started_at 
-    ? Math.max(0, 60 - Math.floor((Date.now() - new Date(profile.beta_started_at).getTime()) / (1000 * 60 * 60 * 24)))
-    : 60;
-
   if (showEditor) {
     return (
       <div className="max-w-6xl mx-auto">
@@ -93,27 +88,6 @@ export default function Listings() {
         <Button variant="hero" onClick={handleCreate} className="gap-2">
           <Plus className="h-4 w-4" /> Create Listing
         </Button>
-      </motion.div>
-
-      {/* Beta Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.05 }}
-        className="p-4 rounded-xl bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 border border-accent/20"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Sparkles className="h-5 w-5 text-accent" />
-            <div>
-              <p className="font-semibold text-foreground">Beta Access: Unlimited Listings</p>
-              <p className="text-sm text-muted-foreground">Create as many listings as you want during the beta period.</p>
-            </div>
-          </div>
-          <Badge variant="outline" className="bg-accent/20 text-accent border-accent/30">
-            {betaDaysRemaining} days remaining
-          </Badge>
-        </div>
       </motion.div>
 
       {/* Listings Grid */}
