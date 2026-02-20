@@ -109,7 +109,7 @@ Create `.env` file:
 ```bash
 # Supabase
 VITE_SUPABASE_URL=https://xxxxx.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+VITE_SUPABASE_PUBLISHABLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 # Stripe
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_51...
@@ -123,6 +123,8 @@ VITE_APP_NAME=Alaska Guide Search
 VITE_SENTRY_DSN=
 VITE_GOOGLE_ANALYTICS_ID=
 ```
+
+Do not expose Stripe secret keys in frontend `VITE_*` variables.
 
 - [ ] All environment variables set
 - [ ] .env added to .gitignore

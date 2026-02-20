@@ -82,9 +82,12 @@ This site uses Stripe for $10 flat-fee listing payments.
 2. Get your API keys from the Stripe Dashboard
 3. Create a `.env` file based on `.env.example`:
    ```
+   VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
    VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
-   VITE_STRIPE_SECRET_KEY=sk_test_...
+   VITE_STRIPE_CONNECT_CLIENT_ID=ca_...
    ```
+4. Keep your Stripe secret key server-side only (API route, server, or edge function), never in `VITE_*` frontend variables.
 
 ### Features
 

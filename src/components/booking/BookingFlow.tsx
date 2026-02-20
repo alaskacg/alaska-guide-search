@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -32,7 +32,8 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
 // Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
 
 // Types
 interface Service {
@@ -184,6 +185,12 @@ const Step1SelectService = ({
     mockServices.find(s => s.id === (preSelectedServiceId || selectedServiceId))
   );
 
+  useEffect(() => {
+    if (preSelectedServiceId) {
+      onNext({ serviceId: preSelectedServiceId });
+    }
+  }, [preSelectedServiceId, onNext]);
+
   const handleServiceSelect = (serviceId: string) => {
     const service = mockServices.find(s => s.id === serviceId);
     setSelectedService(service);
@@ -194,11 +201,7 @@ const Step1SelectService = ({
     onNext(data);
   };
 
-  if (preSelectedServiceId) {
-    // Auto-advance if service is pre-selected
-    setTimeout(() => onNext({ serviceId: preSelectedServiceId }), 0);
-    return null;
-  }
+  if (preSelectedServiceId) return null;
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -549,11 +552,13 @@ const Step3Review = ({
 
 // Step 4: Payment Form
 const Step4Payment = ({
+  guideId,
   selectedService,
   dateGuestData,
   onSuccess,
   onBack,
 }: {
+  guideId: string;
   selectedService: Service;
   dateGuestData: Step2Data;
   onSuccess: () => void;
@@ -563,6 +568,7 @@ const Step4Payment = ({
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const calculateDepositAmount = () => {
     const basePrice = selectedService.basePrice;
@@ -590,28 +596,44 @@ const Step4Payment = ({
     setIsProcessing(true);
 
     try {
-      // Create payment intent on your server
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: Math.round(depositAmount * 100), // Convert to cents
-          guideId: 'guide-id', // Replace with actual guideId
-          serviceId: selectedService.id,
-          metadata: {
-            customerName: dateGuestData.name,
-            customerEmail: dateGuestData.email,
-            bookingDate: dateGuestData.date.toISOString(),
-            guests: dateGuestData.guests,
-          },
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create payment intent');
+      if (!agreedToTerms) {
+        throw new Error('Please accept the booking and escrow terms before payment.');
       }
 
-      const { clientSecret } = await response.json();
+      const paymentPayload = {
+        amount: Math.round(depositAmount * 100), // cents
+        guideId,
+        serviceId: selectedService.id,
+        metadata: {
+          customerName: dateGuestData.name,
+          customerEmail: dateGuestData.email,
+          bookingDate: dateGuestData.date.toISOString(),
+          guests: dateGuestData.guests,
+        },
+      };
+
+      const endpoints = ['/api/bookings/create-deposit-payment', '/api/create-payment-intent'];
+      let clientSecret: string | undefined;
+
+      for (const endpoint of endpoints) {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(paymentPayload),
+        });
+
+        if (!response.ok) {
+          continue;
+        }
+
+        const data = await response.json();
+        clientSecret = data.client_secret || data.clientSecret;
+        if (clientSecret) break;
+      }
+
+      if (!clientSecret) {
+        throw new Error('Unable to initialize payment. Please contact support before retrying.');
+      }
 
       // Confirm payment
       const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
@@ -696,6 +718,18 @@ const Step4Payment = ({
               <p>🔒 Your payment information is encrypted and secure</p>
               <p>💳 Powered by Stripe</p>
             </div>
+
+            <label className="flex items-start gap-2 text-xs text-muted-foreground cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreedToTerms}
+                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                className="mt-0.5"
+              />
+              <span>
+                I agree to the booking terms, cancellation policy, and escrow handling for this deposit.
+              </span>
+            </label>
           </CardContent>
         </Card>
       </div>
@@ -711,7 +745,7 @@ const Step4Payment = ({
         <Button type="button" variant="outline" onClick={onBack} disabled={isProcessing}>
           <ChevronLeft className="mr-2 h-4 w-4" /> Back
         </Button>
-        <Button type="submit" disabled={!stripe || isProcessing}>
+        <Button type="submit" disabled={!stripe || isProcessing || !agreedToTerms}>
           {isProcessing ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -892,14 +926,24 @@ export default function BookingFlow({ guideId, serviceId, onComplete }: BookingF
             )}
 
             {currentStep === 4 && selectedService && bookingData.step2 && (
-              <Elements stripe={stripePromise}>
-                <Step4Payment
-                  selectedService={selectedService}
-                  dateGuestData={bookingData.step2}
-                  onSuccess={handlePaymentSuccess}
-                  onBack={handleBack}
-                />
-              </Elements>
+              stripePromise ? (
+                <Elements stripe={stripePromise}>
+                  <Step4Payment
+                    guideId={guideId}
+                    selectedService={selectedService}
+                    dateGuestData={bookingData.step2}
+                    onSuccess={handlePaymentSuccess}
+                    onBack={handleBack}
+                  />
+                </Elements>
+              ) : (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    Payments are temporarily unavailable because Stripe is not configured.
+                  </AlertDescription>
+                </Alert>
+              )
             )}
 
             {currentStep === 5 && selectedService && bookingData.step2 && (

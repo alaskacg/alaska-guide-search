@@ -17,7 +17,7 @@ A world-class booking platform for Alaska outdoor guides featuring AI-verified 2
 - **Mobile Optimized** - Fully responsive on all devices
 
 ### For Guides
-- **Professional Profiles** - Custom booking pages at `/guide/[username]`
+- **Professional Profiles** - Custom booking pages at `/book/[username]`
 - **Service Management** - Create and manage offerings with photos/videos
 - **Availability Calendar** - Manage booking slots by date
 - **Comprehensive Dashboard** - Earnings, bookings, analytics
@@ -87,7 +87,7 @@ Create `.env` file:
 ```bash
 # Supabase
 VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 
 # Stripe
 VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
@@ -96,6 +96,8 @@ VITE_STRIPE_CONNECT_CLIENT_ID=your_stripe_connect_client_id
 # Optional
 VITE_APP_URL=http://localhost:5173
 ```
+
+Keep Stripe secret keys on your backend/webhook service only.
 
 ### 3. Database Setup
 

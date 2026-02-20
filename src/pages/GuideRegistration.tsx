@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -36,7 +37,7 @@ const alaskaRegions = [
 const GuideRegistration = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -56,7 +57,7 @@ const GuideRegistration = () => {
     });
   }, [navigate]);
 
-  const updateField = (field: string, value: any) => setFormData(prev => ({ ...prev, [field]: value }));
+  const updateField = (field: string, value: unknown) => setFormData(prev => ({ ...prev, [field]: value }));
 
   type ServiceType = "adventure" | "eco" | "hunting" | "fishing" | "pilot";
   
@@ -85,6 +86,27 @@ const GuideRegistration = () => {
     }
     setLoading(true);
     try {
+      if (!user) {
+        throw new Error("Please sign in to continue.");
+      }
+
+      const { data: existingApplication } = await supabase
+        .from("guide_applications")
+        .select("id, status")
+        .eq("user_id", user.id)
+        .in("status", ["pending", "under_review"])
+        .limit(1)
+        .maybeSingle();
+
+      if (existingApplication) {
+        toast({
+          title: "Application in review",
+          description: "You already have a pending application. Our team will contact you soon.",
+        });
+        navigate("/guide-dashboard");
+        return;
+      }
+
       // Create the application
       const { data: applicationData, error: appError } = await supabase.from("guide_applications").insert([{
         user_id: user.id,
@@ -103,14 +125,14 @@ const GuideRegistration = () => {
         service_areas: formData.serviceAreas,
         bio: formData.bio || null,
         website_url: formData.websiteUrl || null,
-        status: 'approved',
+        status: 'pending',
       }]).select().single();
 
       if (appError) throw appError;
 
       const displayName = formData.businessName || formData.fullLegalName.split(' ')[0];
       
-      const { error: profileError } = await supabase.from("guide_profiles").insert([{
+      const { error: profileError } = await supabase.from("guide_profiles").upsert([{
         user_id: user.id,
         application_id: applicationData.id,
         display_name: displayName,
@@ -121,20 +143,23 @@ const GuideRegistration = () => {
         years_of_experience: parseInt(formData.yearsOfExperience),
         service_types: formData.serviceTypes,
         service_areas: formData.serviceAreas,
-        is_verified: true,
-        is_active: true,
-        subscription_status: 'free',
-      }]);
+        is_verified: false,
+        is_active: false,
+        subscription_status: 'pending_review',
+      }], {
+        onConflict: 'user_id',
+      });
 
       if (profileError) throw profileError;
 
       toast({ 
-        title: "🎉 Welcome!", 
-        description: "Your guide profile is now live. You have full access to all features!" 
+        title: "Application submitted", 
+        description: "Your profile was submitted for verification and will go live after approval." 
       });
       navigate("/guide-dashboard");
-    } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Unable to submit guide application";
+      toast({ title: "Error", description: message, variant: "destructive" });
     } finally {
       setLoading(false);
     }

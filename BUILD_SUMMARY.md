@@ -72,7 +72,7 @@ A **world-class, production-ready booking platform** for Alaska outdoor guides w
 
 **Component**: `GuideBookingPage.tsx`
 
-**URL Pattern**: `/guide/[username]` (e.g., `/guide/alaska-fishing-adventures`)
+**URL Pattern**: `/book/[username]` (e.g., `/book/alaska-fishing-adventures`)
 
 **Features**:
 - Professional hero with guide photo/bio
@@ -338,7 +338,7 @@ A **world-class, production-ready booking platform** for Alaska outdoor guides w
 ### 3. Environment Variables
 ```bash
 VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
+VITE_SUPABASE_PUBLISHABLE_KEY=
 VITE_STRIPE_PUBLISHABLE_KEY=
 VITE_STRIPE_CONNECT_CLIENT_ID=
 ```

@@ -126,7 +126,7 @@ export default function GuideApproval() {
 
       if (error) throw error;
 
-      // If approved, create guide profile
+      // If approved, activate or create guide profile
       if (status === 'approved') {
         const guideProfileData = {
           application_id: applicationId,
@@ -142,9 +142,22 @@ export default function GuideApproval() {
           is_active: true,
         };
 
-        const { error: profileError } = await supabase
+        const { data: existingProfile } = await supabase
           .from('guide_profiles')
-          .insert(guideProfileData);
+          .select('id')
+          .eq('user_id', application.user_id)
+          .maybeSingle();
+
+        const profileOperation = existingProfile
+          ? supabase
+              .from('guide_profiles')
+              .update(guideProfileData)
+              .eq('id', existingProfile.id)
+          : supabase
+              .from('guide_profiles')
+              .insert(guideProfileData);
+
+        const { error: profileError } = await profileOperation;
 
         if (profileError) {
           // Rollback application status if profile creation fails
@@ -161,6 +174,12 @@ export default function GuideApproval() {
           .from('profiles')
           .update({ user_type: 'guide' })
           .eq('id', application.user_id);
+      } else {
+        // Ensure rejected applicants are not publicly visible as active guides.
+        await supabase
+          .from('guide_profiles')
+          .update({ is_active: false })
+          .eq('user_id', application.user_id);
       }
 
       return application;
@@ -177,10 +196,11 @@ export default function GuideApproval() {
         description: `Application ${variables.status === 'approved' ? 'approved' : 'rejected'} successfully.`,
       });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const message = error instanceof Error ? error.message : 'Failed to review application.';
       toast({
         title: 'Error',
-        description: error.message || 'Failed to review application.',
+        description: message,
         variant: 'destructive',
       });
     },

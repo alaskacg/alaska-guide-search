@@ -19,6 +19,7 @@ interface GuideProfileData {
   id: string;
   display_name: string;
   business_name: string | null;
+  custom_url_slug?: string | null;
   tagline: string | null;
   bio: string | null;
   avatar_url: string | null;
@@ -295,9 +296,15 @@ export default function GuideProfile() {
               animate={{ opacity: 1, x: 0 }}
               className="hidden md:flex gap-3"
             >
-              <Button variant="hero" size="lg">
-                Book Now
-              </Button>
+              {profile.custom_url_slug ? (
+                <Button variant="hero" size="lg" asChild>
+                  <Link to={`/book/${profile.custom_url_slug}`}>Book Now</Link>
+                </Button>
+              ) : (
+                <Button variant="hero" size="lg" disabled>
+                  Booking Coming Soon
+                </Button>
+              )}
               <Button variant="outline" size="lg">
                 Contact
               </Button>
@@ -541,9 +548,15 @@ export default function GuideProfile() {
                 </div>
               )}
 
-              <Button variant="hero" className="w-full mb-4">
-                Check Availability
-              </Button>
+              {profile.custom_url_slug ? (
+                <Button variant="hero" className="w-full mb-4" asChild>
+                  <Link to={`/book/${profile.custom_url_slug}`}>Check Availability</Link>
+                </Button>
+              ) : (
+                <Button variant="hero" className="w-full mb-4" disabled>
+                  Booking Not Enabled
+                </Button>
+              )}
 
               {/* Mini Calendar */}
               <div className="border-t border-border pt-4 mt-4">

@@ -15,4 +15,17 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "query-vendor": ["@tanstack/react-query"],
+          "supabase-vendor": ["@supabase/supabase-js"],
+          "stripe-vendor": ["@stripe/react-stripe-js", "@stripe/stripe-js"],
+          "ui-vendor": ["framer-motion", "lucide-react", "class-variance-authority", "clsx", "tailwind-merge"],
+        },
+      },
+    },
+  },
 }));

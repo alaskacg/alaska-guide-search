@@ -253,7 +253,7 @@ export default function GuideBookingPage() {
         <meta property="og:image" content={guide.cover_image_url || guide.avatar_url || ''} />
         <meta property="og:type" content="profile" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href={`${window.location.origin}/guide/${username}`} />
+        <link rel="canonical" href={`${window.location.origin}/book/${username}`} />
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -397,7 +397,7 @@ export default function GuideBookingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <Card>
+                <Card id="services">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Info className="h-5 w-5" />
@@ -606,17 +606,30 @@ export default function GuideBookingPage() {
                           Check Availability
                         </a>
                       </Button>
-                      <Button variant="outline" className="w-full" asChild>
-                        <a href={`mailto:${guide.email}`}>
+                      {guide.email ? (
+                        <Button variant="outline" className="w-full" asChild>
+                          <a href={`mailto:${guide.email}`}>
+                            <Mail className="mr-2 h-4 w-4" />
+                            Send Message
+                          </a>
+                        </Button>
+                      ) : (
+                        <Button variant="outline" className="w-full" disabled>
                           <Mail className="mr-2 h-4 w-4" />
-                          Send Message
-                        </a>
-                      </Button>
+                          Messaging Unavailable
+                        </Button>
+                      )}
                     </div>
 
-                    <p className="text-xs text-center text-muted-foreground">
-                      Free cancellation up to 48 hours before trip
-                    </p>
+                    <div className="space-y-2">
+                      <p className="text-xs text-center text-muted-foreground">
+                        Free cancellation up to 48 hours before trip
+                      </p>
+                      <div className="flex items-center justify-center gap-3 text-xs">
+                        <Link to="/escrow" className="text-primary hover:underline">Escrow Terms</Link>
+                        <Link to="/terms" className="text-primary hover:underline">Platform Terms</Link>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
 

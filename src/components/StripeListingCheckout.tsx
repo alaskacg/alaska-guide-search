@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Link } from 'react-router-dom';
+import { ShieldAlert } from 'lucide-react';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
 
 interface CheckoutFormProps {
   onSuccess: () => void;
@@ -13,11 +16,20 @@ function CheckoutForm({ onSuccess }: CheckoutFormProps) {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!stripe || !elements) return;
+    if (!stripe || !elements) {
+      setError('Payment system is still initializing. Please wait and try again.');
+      return;
+    }
+
+    if (!agreedToTerms) {
+      setError('Please confirm the escrow and listing terms before submitting payment.');
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -36,7 +48,8 @@ function CheckoutForm({ onSuccess }: CheckoutFormProps) {
         onSuccess();
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -50,6 +63,19 @@ function CheckoutForm({ onSuccess }: CheckoutFormProps) {
       </div>
       
       <PaymentElement />
+
+      <label className="flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={agreedToTerms}
+          onChange={(e) => setAgreedToTerms(e.target.checked)}
+          className="mt-0.5"
+        />
+        <span>
+          I agree to the <Link to="/terms" className="text-blue-700 hover:underline">Terms of Service</Link> and{' '}
+          <Link to="/escrow" className="text-blue-700 hover:underline">Escrow Agreement</Link>.
+        </span>
+      </label>
       
       {error && (
         <div className="bg-red-50 p-3 rounded-md border border-red-200">
@@ -59,7 +85,7 @@ function CheckoutForm({ onSuccess }: CheckoutFormProps) {
       
       <button
         type="submit"
-        disabled={!stripe || loading}
+        disabled={!stripe || loading || !agreedToTerms}
         className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {loading ? 'Processing...' : 'Pay $10 & List Now'}
@@ -74,6 +100,22 @@ interface StripeListingCheckoutProps {
 }
 
 export default function StripeListingCheckout({ clientSecret, onSuccess }: StripeListingCheckoutProps) {
+  if (!stripePromise) {
+    return (
+      <div className="max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg border border-red-200">
+        <div className="flex items-start gap-3">
+          <ShieldAlert className="h-5 w-5 text-red-600 mt-0.5" />
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">Payment Unavailable</h2>
+            <p className="text-sm text-gray-700 mt-1">
+              Stripe is not configured. Set <code>VITE_STRIPE_PUBLISHABLE_KEY</code> to enable checkout.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const options = {
     clientSecret,
     appearance: {
